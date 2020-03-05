@@ -1,15 +1,20 @@
 <?php 
-//Test database connection
+/**
+ * 
+ * 
+ *Front Controller deals with all the routing.
+ *
+ * 
+ */
+require_once('./classes/FrontController.php');
 
-$db = new PDO( 'sqlite:./sqlite/chi2019.sqlite' );
-
-$sqlQuery = "SELECT name FROM sqlite_master WHERE type='table'";
-
-$stmt = $db->query( $sqlQuery );
-
-while ( $myLine = $stmt->fetchObject()){
- 
- echo $myLine->name." ";
+function __autoload($class_name) {
+    if (is_readable('./classes/'.$class_name.'.php')) {
+        require_once './classes/'.$class_name.'.php';
+    } else if (is_readable('./Controllers/'.$class_name.'.php')) {
+        require_once './Controllers/'.$class_name.'.php';
+    } else if (is_readable('./Models/'.$class_name.'.php')) {
+        require_once './Models/'.$class_name.'.php';
+    }
 }
-
 ?>
