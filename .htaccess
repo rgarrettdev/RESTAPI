@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteRule ^([^/]*)/([^/]*)$ index.php?url=$1&api=$2 [L]
+RewriteRule ^([^/]*)/([^/]*)/([^/]*)$ index.php?url=$1&api=$2&search=$3 [L]
+RewriteRule ^([^/]*)/([^/]*)/([^/]*)/([^/]*)$ index.php?url=$1&api=$2&apiParam1=$3&apiParam2=$4 [L]
+RewriteRule ^([^/]+)/? index.php?url=$1 [L,QSA]
