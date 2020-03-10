@@ -6,7 +6,7 @@ List of all supported endpoints.
  `/api/schedule/:session`\
  `/api/presentations/search/:searchterm`\
  `/api/presentations/category/:categoryname`\
- `/api/login`
+ `/api/login/`
 
 ### Read more detail through the documentation
 Found at the documentation endpoint. \
