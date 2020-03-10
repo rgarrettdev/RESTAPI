@@ -41,4 +41,8 @@ Route::set('api', 'presentations', function() {
     Api::createView('Api');
 });
 
+Route::set('api', 'login', function() {
+    Api::createView('Api');
+});
+
 ?>

@@ -55,6 +55,7 @@ class Route {
                         Api::printPresentationsQueryAll();
                     } else {
                         echo("ERROR: NOT SUPPORTED ENDPOINT");
+                        http_response_code(405);
                     }
                 /**
                  * Normal checks, now with an another apiParam called apiParam2.
@@ -88,6 +89,7 @@ class Route {
                         Api::printPresentationsQuerySearchWithCategory($apiOpt2, $apiOpt3);
                     } elseif ($apiOpt1 == 'category') {
                         echo("ERROR: TOO MANY ENDPOINT ARGUMENTS");
+                        http_response_code(405);
                     }
                     http_response_code(200);
                 }
@@ -97,20 +99,30 @@ class Route {
               * 
               */
                 echo("ERROR: TOO MANY ENDPOINT ARGUMENTS");
+                http_response_code(405);
             }
         }
         /**
-         * POST WILL BE USED FOR LOGON MOST LIKELY.
+         * POST.
          */
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            echo "POST";
-        }
-        //Add else if for response
-         else {
-          //  http_response_code(405);
+            if ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && sizeof($_GET) == 3) {
+                $apiOpt1 = $_GET['apiParam1'];
+                $loginApiEmail = $_POST['email'];
+                $loginApiPassword = $_POST['password'];
+                $function->__invoke();
+                http_response_code(200);
+                if ($apiOpt1 == NULL && $api == 'login') {
+                    Api::loginQuery($loginApiEmail,$loginApiPassword);
+                    http_response_code(200);
+                }  else {
+                    echo("ERROR: NOT SUPPORTED POST ENDPOINT");
+                    http_response_code(405);
+                }
+            }
         }
     }
-    //TODO: ADD CLAUSES FOR OTHER HEADER TYPES, CHECK POSTMAN FOR THEM!!
+    //TODO: ADD CLAUSES FOR OTHER HEADER TYPES!!
 }
 
 ?>

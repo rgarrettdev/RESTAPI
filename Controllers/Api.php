@@ -9,7 +9,7 @@ class Api extends Controller {
        
     }
     public static function printScheduleQuerySingle($apiOpt1) {
-        echo(Database::query("SELECT * FROM 'sessions' WHERE id=$apiOpt1"));
+        echo(Database::query("SELECT * FROM 'sessions' WHERE id=:id",[ ':id' => $apiOpt1 ]));
        
     }
     public static function printPresentationsQueryAll() {
@@ -28,6 +28,17 @@ class Api extends Controller {
     public static function printPresentationsQueryCategory($apiOpt2) {
         print_r(Database::query("SELECT e.*, s.type FROM activities e INNER JOIN 'sessions' s ON e.sessionsID=s.id
         WHERE s.type='$apiOpt2'"));
+    }
+    public static function loginQuery($loginApiUser,$loginApiPassword) {
+        $email = self::test_input($loginApiUser);
+        print_r(Database::loginQuery("SELECT * FROM users WHERE email=:email",[ ':email' => $email ]));
+    }
+
+    public static function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 }
 ?>
