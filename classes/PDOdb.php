@@ -18,6 +18,7 @@ class pdoDB
      */
     public static function getConnection()
     {
+        $dbpath = ApplicationRegistry::getDBName();
         if (!self::$dbconnect) {
             try {
                 self::$dbconnect = new PDO("sqlite:./sqlite/chi2019.sqlite");
