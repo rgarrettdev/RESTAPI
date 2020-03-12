@@ -36,12 +36,18 @@ class Api extends Controller {
         print_r(Database::query("SELECT e.*, s.type FROM activities e INNER JOIN 'sessions' s ON e.sessionsID=s.id
         WHERE s.type=:sessionType", [ 'sessionType' => $apiOpt2]));
     }
-    public static function loginQuery($loginApiUser,$loginApiPassword) {
+    public static function loginRequest($loginApiUser) {
         $email = self::test_input($loginApiUser);
-        print_r(Database::loginQuery("SELECT * FROM users WHERE email=:email",[ ':email' => $email ]));
+        print_r(Database::loginRequest("SELECT * FROM users WHERE email=:email",[ ':email' => $email ]));
     }
 
-    public static function test_input($data) {
+    public static function updateSessionChair($updateRequestBody) {
+        $data = self::test_input($updateRequestBody);
+        //print_r(Database::loginRequest("SELECT * FROM users WHERE email=:email",[ ':email' => $email ]));
+        echo($data);
+    }
+
+    protected function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
