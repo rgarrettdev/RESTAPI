@@ -11,12 +11,24 @@ class Database
         }
     }
 
-    public static function loginQuery($query, $params = array()) {
+    public static function loginRequest($query, $params = array()) {
         $stmt = pdoDB::getConnection()->prepare($query);
         $stmt->execute($params);
         if ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $response = json_encode($data, JSON_PRETTY_PRINT);
-            return $response;
+            //Checks if password is valid
+            if (password_verify($_POST['password'], $data['password'])) {
+                $token = array();
+                $token['iat'] = time();
+                $token['iss'] = 'localhost';
+                $token['exp'] = time() + (3600); //expires in an hour
+                $token['email'] = $data['email'];
+                $token['admin'] = $data['admin'];
+                $secretKey = ApplicationRegistry::getSecretKey();
+                $encodedToken = JWT::encode($token, $secretKey);//Change key to a random string.
+                $response = json_encode(array("message" => "Success", "token" => $encodedToken),JSON_PRETTY_PRINT);
+                setcookie("user", $encodedToken, time() + (3600), "/");
+                return $response;
+            }
         } else {
             echo("User does not exist");
         }   
