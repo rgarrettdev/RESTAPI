@@ -2,15 +2,15 @@
 class Api extends Controller {
     //TODO:: ADD COMMENTS ABOUT EACH SELECT STATEMENT!
     public static function printMasterQuery() {
-        echo(Database::query("SELECT name FROM sqlite_master where type='table'"));
+        print_r(Database::query("SELECT name FROM sqlite_master where type='table'"));
     }
     public static function printScheduleQueryAll() {
-        echo(Database::query("SELECT * FROM 'sessions'"));
+        print_r(Database::query("SELECT * FROM 'sessions'"));
        
     }
     public static function printScheduleQuerySingle($apiOpt1) {
         $scheduleID = self::test_input($apiOpt1);
-        echo(Database::query("SELECT * FROM 'sessions' WHERE id=:id",[ ':id' => $scheduleID ]));
+        print_r(Database::query("SELECT * FROM 'sessions' WHERE id=:id",[ ':id' => $scheduleID ]));
        
     }
     public static function printPresentationsQueryAll() {
@@ -41,10 +41,28 @@ class Api extends Controller {
         print_r(Database::loginRequest("SELECT * FROM users WHERE email=:email",[ ':email' => $email ]));
     }
 
-    public static function updateSessionChair($updateRequestBody) {
+    public static function updateSessionChair($updateRequestBody, $updateID) {
         $data = self::test_input($updateRequestBody);
-        //print_r(Database::loginRequest("SELECT * FROM users WHERE email=:email",[ ':email' => $email ]));
-        echo($data);
+        $id = self::test_input($updateID);
+        if (!isset($_COOKIE['user'])) {
+            echo json_encode(array( "message" => "Cookie not set"),JSON_PRETTY_PRINT);
+        } else {
+
+           try {
+               $decoded = JWT::decode($_COOKIE['user'], ApplicationRegistry::getSecretKey());
+               if ($decoded->admin == 1) {
+                    Database::query("UPDATE 'sessions' SET chair=:chair WHERE id=:id",[ ':chair' => $data, ':id' => $id ]);
+                    echo json_encode(array( "message" => "Successfully updated Session Chair"),JSON_PRETTY_PRINT);
+                    http_response_code(200);
+               } else {
+                   echo json_encode(array( "message" => "Only admin can change values!"),JSON_PRETTY_PRINT);
+                   http_response_code(401);
+               }
+           } catch (Exception $e) {
+            echo json_encode(array( "message" => "Access Denied", "error" => $e->getMessage()),JSON_PRETTY_PRINT);
+            http_response_code(401);
+           }
+        }
     }
 
     protected function test_input($data) {

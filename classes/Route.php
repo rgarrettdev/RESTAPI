@@ -109,11 +109,9 @@ class Route {
             if ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && sizeof($_GET) == 3) {
                 $apiOpt1 = $_GET['apiParam1'];
                 $function->__invoke();
-                http_response_code(200);
                 if ($api == 'login' && $apiOpt1 == NULL) {
                     $loginApiEmail = $_POST['email'];
                     Api::loginRequest($loginApiEmail);
-                    http_response_code(200);
                 } else {
                     echo("ERROR: NOT SUPPORTED POST ENDPOINT");
                     http_response_code(405);
@@ -121,23 +119,30 @@ class Route {
             }
         }
         if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-            if ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && sizeof($_GET) == 3) {
+            if ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && isset($_GET['apiParam2']) == true && sizeof($_GET) == 4) {
                 $apiOpt1 = $_GET['apiParam1'];
+                $apiOpt2 = $_GET['apiParam2'];
                 if ($api == 'schedule' && $apiOpt1 == 'update') {
                     $_PUT = self::putParse();
-                    Api::updateSessionChair($_PUT['sessionChair']);
+                    Api::updateSessionChair($_PUT['sessionChair'], $apiOpt2);
                 }
             }
         }
     }
     //TODO: ADD CLAUSES FOR OTHER HEADER TYPES!!
 
+    /**
+     * This function parses put header. PHP has no built in $_PUT
+     */
     protected static function putParse() {
         parse_str(file_get_contents("php://input"), $_PUT);
         foreach ($_PUT as $key => $value) {
             unset($_PUT[$key]);
             $_PUT[str_replace('amp;', '', $key)] = $value;
-            
+        /**
+         * Content type needs to be specified as when PUT header is parsed in Route.php, content type reverts to default settings.
+         */
+        header("Content-Type: application/json; charset=UTF-8");
         }
         return $_PUT;
     }

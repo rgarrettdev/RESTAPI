@@ -26,13 +26,18 @@ class Database
                 $secretKey = ApplicationRegistry::getSecretKey();
                 $encodedToken = JWT::encode($token, $secretKey);//Change key to a random string.
                 $response = json_encode(array("message" => "Success", "token" => $encodedToken),JSON_PRETTY_PRINT);
+                http_response_code(200);
                 setcookie("user", $encodedToken, time() + (3600), "/");
                 return $response;
+            } else {
+                echo("Password incorrect");
+                http_response_code(401);
             }
         } else {
             echo("User does not exist");
+            http_response_code(401);
         }   
-        //TODO:: FINISH LOGIN CHECKS password_verify()
+        //TODO:: FINISH LOGIN CHECKS password_verify() (when password is incorrect!)
     }
 }
 
