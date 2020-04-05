@@ -5,6 +5,7 @@ List of all supported endpoints.
  `/api/schedule/`\
  `/api/schedule/:session`\
  `/api/schedule/update/:id`\
+ `/api/presentations/`\
  `/api/presentations/search/:searchterm`\
  `/api/presentations/category/:categoryname`\
  `/api/login/`
