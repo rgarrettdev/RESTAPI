@@ -8,6 +8,8 @@ class Route {
         self::$validRoutes[] = $route;
         self::$validApis[] = $api;
 
+        $apiObj = new Api();
+
             /**
              * If statments allow the api to respond depending on the condition.
              */
@@ -48,11 +50,11 @@ class Route {
                     $function->__invoke();
                     http_response_code(200);
                     if ($apiOpt1 != NULL && $api == 'schedule') {
-                        Api::printScheduleQuerySingle($apiOpt1);
+                        $apiObj->printScheduleQuerySingle($apiOpt1);
                     } elseif ($apiOpt1 == NULL && $api == 'schedule') {
-                        Api::printScheduleQueryAll();
+                        $apiObj->printScheduleQueryAll();
                     } elseif ($apiOpt1 == NULL && $api == 'presentations') {
-                        Api::printPresentationsQueryAll();
+                        $apiObj->printPresentationsQueryAll();
                     } else {
                         echo("ERROR: NOT SUPPORTED ENDPOINT");
                         http_response_code(405);
@@ -67,11 +69,11 @@ class Route {
                     $apiOpt2 = $_GET['apiParam2'];
                     $function->__invoke();
                     if ($apiOpt1 == 'search') {
-                        Api::printPresentationsQuerySearch($apiOpt2);
+                        $apiObj->printPresentationsQuerySearch($apiOpt2);
                     } elseif ($apiOpt1 == 'category' && $apiOpt2 == NULL) {
-                        Api::printShowAllCatrgories();
+                        $apiObj->printShowAllCatrgories();
                     } elseif ($apiOpt1 == 'category') {
-                        Api::printPresentationsQueryCategory($apiOpt2);
+                        $apiObj->printPresentationsQueryCategory($apiOpt2);
                     }
                     http_response_code(200);
                 /**
@@ -86,7 +88,7 @@ class Route {
                     $apiOpt3 = $_GET['apiParam3'];
                     $function->__invoke();
                     if ($apiOpt1 == 'search') {
-                        Api::printPresentationsQuerySearchWithCategory($apiOpt2, $apiOpt3);
+                        $apiObj->printPresentationsQuerySearchWithCategory($apiOpt2, $apiOpt3);
                     } elseif ($apiOpt1 == 'category') {
                         echo("ERROR: TOO MANY ENDPOINT ARGUMENTS");
                         http_response_code(405);
@@ -111,7 +113,7 @@ class Route {
                 $function->__invoke();
                 if ($api == 'login' && $apiOpt1 == NULL) {
                     $loginApiEmail = $_POST['email'];
-                    Api::loginRequest($loginApiEmail);
+                    $apiObj->loginRequest($loginApiEmail);
                 } else {
                     echo("ERROR: NOT SUPPORTED POST ENDPOINT");
                     http_response_code(405);
@@ -124,7 +126,7 @@ class Route {
                 $apiOpt2 = $_GET['apiParam2'];
                 if ($api == 'schedule' && $apiOpt1 == 'update') {
                     $_PUT = self::putParse();
-                    Api::updateSessionChair($_PUT['sessionChair'], $apiOpt2);
+                    $apiObj->updateSessionChair($_PUT['sessionChair'], $apiOpt2);
                 }
             }
         }
