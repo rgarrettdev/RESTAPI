@@ -37,7 +37,6 @@ class Database
             echo("User does not exist");
             http_response_code(401);
         }   
-        //TODO:: FINISH LOGIN CHECKS password_verify() (when password is incorrect!)
     }
 }
 
