@@ -5,7 +5,7 @@ class Api extends Controller {
         print_r(Database::query("SELECT name FROM sqlite_master where type='table'"));
     }
     public function printScheduleQueryAll() {
-        print_r(Database::query("SELECT * FROM 'sessions'"));
+        print_r(Database::query("SELECT * FROM 'sessions' s INNER JOIN 'slots' sl on s.slotsID=sl.id"));
        
     }
     public function printScheduleQuerySingle($apiOpt1) {
@@ -14,26 +14,33 @@ class Api extends Controller {
        
     }
     public function printPresentationsQueryAll() {
-        print_r(Database::query("SELECT * FROM activities"));
+        print_r(Database::query("SELECT * FROM activities a INNER JOIN 'sessions' s on a.sessionsID=s.id INNER JOIN 'slots' sl on s.slotsID=sl.id"));
     }
     public function printShowAllCatrgories() {
         print_r(Database::query("SELECT DISTINCT type FROM 'sessions'"));
     }
     public function printPresentationsQuerySearch($apiOpt1) {
         $searchType = self::test_input($apiOpt1);
-        print_r(Database::query("SELECT * FROM activities WHERE title LIKE :title OR abstract LIKE :abstract",
+        print_r(Database::query("SELECT a.title, a.doiURL, a.abstract, s.type, s.chair, s.room, sl.day, sl.time, auth.author FROM activities a
+         INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
+         INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
+         WHERE a.title LIKE :title OR a.abstract LIKE :abstract",
         [ ':title' => '%'.$searchType.'%', ':abstract' => '%'.$searchType.'%'  ]));
     }
     public function printPresentationsQuerySearchWithCategory($apiOpt1, $apiOpt2) {
         $searchType = self::test_input($apiOpt1);
         $sessionType = self::test_input($apiOpt2);
-        print_r(Database::query("SELECT e.*, s.type FROM activities e INNER JOIN 'sessions' s ON e.sessionsID=s.id
-         WHERE (e.title LIKE :title OR e.abstract LIKE :abstract) AND s.type=:sessionType",
+        print_r(Database::query("SELECT a.title, a.doiURL, a.abstract, s.type, s.chair, s.room, sl.day, sl.time, auth.author FROM activities a
+         INNER JOIN 'sessions' s  ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
+         INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
+         WHERE (a.title LIKE :title OR a.abstract LIKE :abstract) AND s.type=:sessionType",
           [ ':title' => '%'.$searchType.'%', ':abstract' => '%'.$searchType.'%', ':sessionType' => $sessionType]));
     }
     public function printPresentationsQueryCategory($apiOpt2) {
         $sessionType = self::test_input($apiOpt2);
-        print_r(Database::query("SELECT e.*, s.type FROM activities e INNER JOIN 'sessions' s ON e.sessionsID=s.id
+        print_r(Database::query("SELECT a.title, a.doiURL, a.abstract, s.type, s.chair, s.room, sl.day, sl.time, auth.author FROM activities a 
+        INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
+         INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
         WHERE s.type=:sessionType", [ 'sessionType' => $apiOpt2]));
     }
     public function loginRequest($loginApiUser) {
