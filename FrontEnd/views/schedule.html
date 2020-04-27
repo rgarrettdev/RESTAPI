@@ -1,0 +1,28 @@
+<div id="breifSchedule">
+  <div
+    class="card"
+    data-ng-repeat="(sessionDay, sessionDetails) in schedule | groupBy: 'day'"
+  >
+    <div
+      class="card-body text-center"
+      data-ng-click="showTimeDetails = ! showTimeDetails"
+    >
+      <h4 class="card-title">
+        {{sessionDay}}
+      </h4>
+      <div
+        data-ng-click="showPrentationBreifDetails = ! showPrentationBreifDetails"
+        data-ng-repeat="sessionTime in sessionDetails | unique: 'time' | orderBy: 'time'"
+      >
+        <a
+          class="card-link scheduleTime"
+          data-ng-show="showTimeDetails"
+          data-ng-click="addSlotsID(sessionTime.slotsID);"
+          data-ng-href="./#!/schedule"
+        >
+          {{sessionTime.time}}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="card" data-ng-repeat="sessionInfo in schedule">
+  <div class="card-body text-center">
+    <h4 class="card-title">
+      {{sessionInfo.title}}
+    </h4>
+    <h5 class="card-text">
+      {{sessionInfo.time}}
+    </h5>
+    <div>
+      <p class="card-text">
+        {{sessionInfo.room}}
+      </p>
+    </div>
+    <div>
+      <p class="card-text">
+        {{sessionInfo.description}}
+      </p>
+    </div>
+    <div>
+      <p class="card-text">
+        Chair: {{sessionInfo.chair}}
+      </p>
+    </div>
+    <div>
+      <a class="card-link" data-ng-href="./#!/presentation">More Information</a>
+    </div>
+  </div>
+</div>
