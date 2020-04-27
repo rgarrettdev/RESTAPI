@@ -5,16 +5,16 @@ class Api extends Controller {
         print_r(Database::query("SELECT name FROM sqlite_master where type='table'"));
     }
     public function printScheduleQueryAll() {
-        print_r(Database::query("SELECT * FROM 'sessions' s INNER JOIN 'slots' sl on s.slotsID=sl.id"));
+        print_r(Database::query("SELECT * FROM 'sessions' s INNER JOIN 'slots' sl ON s.slotsID=sl.id"));
        
     }
     public function printScheduleQuerySingle($apiOpt1) {
         $scheduleID = self::test_input($apiOpt1);
-        print_r(Database::query("SELECT * FROM 'sessions' WHERE id=:id",[ ':id' => $scheduleID ]));
+        print_r(Database::query("SELECT * FROM 'sessions' s INNER JOIN 'slots' sl ON s.slotsID=sl.id WHERE sl.id=:id",[ ':id' => $scheduleID ]));
        
     }
     public function printPresentationsQueryAll() {
-        print_r(Database::query("SELECT * FROM activities a INNER JOIN 'sessions' s on a.sessionsID=s.id INNER JOIN 'slots' sl on s.slotsID=sl.id"));
+        print_r(Database::query("SELECT * FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id"));
     }
     public function printShowAllCatrgories() {
         print_r(Database::query("SELECT DISTINCT type FROM 'sessions'"));
