@@ -14,7 +14,15 @@ class Api extends Controller {
        
     }
     public function printPresentationsQueryAll() {
-        print_r(Database::query("SELECT * FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id"));
+        print_r(Database::query("SELECT * FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
+        INNER JOIN authors auth ON pap_auth.authorID = auth.authorID"));
+    }
+    public function printPresentationsQuerySingle($apiOpt1) {
+        $slotsID = self::test_input($apiOpt1);
+        print_r(Database::query("SELECT * FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id  INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
+        INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
+         WHERE sl.id=:id",[ ':id' => $slotsID]));
+       
     }
     public function printShowAllCatrgories() {
         print_r(Database::query("SELECT DISTINCT type FROM 'sessions'"));
