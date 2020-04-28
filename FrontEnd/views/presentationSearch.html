@@ -1,0 +1,11 @@
+<div class="container-fluid d-flex justify-content-center">
+    <dir-pagination-controls pagination-id="search"></dir-pagination-controls>
+  </div>
+<ul dir-paginate="presentation in search | itemsPerPage: 5" pagination-id="search">
+    <li>Title: {{presentation.title}}</li>
+    <li>URL: {{presentation.doiURL}}</li>
+    <li>Abstract: {{presentation.abstract}}</li>
+    <li>Authors: {{presentation.author}}</li>
+    <li>Author Affiliation: {{presentation.affiliation}}</li>
+  </ul>
+</div>
