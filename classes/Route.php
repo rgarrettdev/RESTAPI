@@ -55,6 +55,8 @@ class Route {
                         $apiObj->printScheduleQueryAll();
                     } elseif ($apiOpt1 == NULL && $api == 'presentations') {
                         $apiObj->printPresentationsQueryAll();
+                    } elseif ($apiOpt1 != NULL && $api == 'presentations'){
+                        $apiObj->printPresentationsQuerySingle($apiOpt1);
                     } else {
                         echo("ERROR: NOT SUPPORTED ENDPOINT");
                         http_response_code(405);
