@@ -1,14 +1,18 @@
-app.factory("slotService", function () {
-  var savedData = [];
-  function set(data) {
-    savedData = data;
-  }
-  function get() {
-    return savedData;
-  }
+app.factory("slotService", [
+  "$cookies",
+  function ($cookies) {
+    var savedData = [];
+    function set(data) {
+      savedData = data;
+      $cookies.put("slotID", savedData);
+    }
+    function get() {
+      return $cookies.get("slotID");
+    }
 
-  return {
-    set: set,
-    get: get,
-  };
-});
+    return {
+      set: set,
+      get: get,
+    };
+  },
+]);
