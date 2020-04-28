@@ -1,11 +1,12 @@
 /**
  * Start a new application (module)
  */
-var app = angular.module("WAI", ["angular.filter", "ngRoute", "ngAnimate"]);
+var app = angular.module("WAI", ["angular.filter", "ngRoute", "ngAnimate", "ngCookies", "angularUtils.directives.dirPagination"]);
 
 app.config([
   "$routeProvider",
-  function ($routeProvider) {
+  "paginationTemplateProvider",
+  function ($routeProvider, paginationTemplateProvider) {
     /**
      *
      * Route Info
@@ -22,6 +23,19 @@ app.config([
       })
       .when("/presentation", {
         templateUrl: "views/presentation.html",
+        controller: "presentationController",
+      })
+      .when("/presentation/category/", {
+        templateUrl: "views/presentationCategory.html",
+        controller: "presentationCategoryController",
+      })
+      .when("/presentation/search/:term", {
+        templateUrl: "views/presentationSearch.html",
+        controller: "presentationSearchController",
+      })
+      .when("/presentation/search/:srch/category/:cat", {
+        templateUrl: "views/presentationSearchCategory.html",
+        controller: "presentationSearchCategoryController",
       })
       .when("/about", {
         templateUrl: "views/about.html",
@@ -29,5 +43,6 @@ app.config([
       .otherwise({
         redirectTo: "/",
       });
+      paginationTemplateProvider.setPath('./views/template/dirPagination.tpl.html');
   },
 ]);
