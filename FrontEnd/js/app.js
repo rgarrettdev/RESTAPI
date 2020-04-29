@@ -17,13 +17,17 @@ app.config([
         templateUrl: "views/schedule.html",
         controller: "scheduleController",
       })
-      .when("/schedule", {
+      .when("/schedule/:id", {
         templateUrl: "views/scheduleDetailed.html",
         controller: "scheduleDetailedController",
       })
       .when("/presentation", {
         templateUrl: "views/presentation.html",
         controller: "presentationController",
+      })
+      .when("/presentation/:id", {
+        templateUrl: "views/presentationDetailed.html",
+        controller: "presentationDetailedController",
       })
       .when("/presentation/category/", {
         templateUrl: "views/presentationCategory.html",
