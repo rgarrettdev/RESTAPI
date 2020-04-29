@@ -2,18 +2,16 @@
   class="container-fluid"
 >
 <h2 class="text-center">Presentations</h2>
-<form>
-  <input data-ng-model="search" type="text">
-  <a role="button" class="btn btn-info" data-ng-href="./#!/presentation/search/{{search}}">Search</a>
-</form>
-<div class="container-fluid d-flex justify-content-center">
-  <dir-pagination-controls pagination-id="pres"></dir-pagination-controls>
-</div>
+<search></search>
   <ul dir-paginate="presentation in presentations | itemsPerPage: 5" pagination-id="pres">
     <li>Title: {{presentation.title}}</li>
+    <li>Chair: {{presentation.chair}}</li>
     <li>URL: {{presentation.doiURL}}</li>
     <li>Abstract: {{presentation.abstract}}</li>
     <li>Authors: {{presentation.author}}</li>
     <li>Author Affiliation: {{presentation.affiliation}}</li>
   </ul>
+</div>
+<div class="container-fluid d-flex justify-content-center">
+  <dir-pagination-controls pagination-id="pres" on-page-change="resetPos()"></dir-pagination-controls>
 </div>

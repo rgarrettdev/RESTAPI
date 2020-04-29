@@ -1,6 +1,5 @@
-<div class="container-fluid d-flex justify-content-center">
-    <dir-pagination-controls pagination-id="search"></dir-pagination-controls>
-  </div>
+<search></search>
+
 <ul dir-paginate="presentation in search | itemsPerPage: 5" pagination-id="search">
     <li>Title: {{presentation.title}}</li>
     <li>URL: {{presentation.doiURL}}</li>
@@ -8,4 +7,6 @@
     <li>Authors: {{presentation.author}}</li>
     <li>Author Affiliation: {{presentation.affiliation}}</li>
   </ul>
-</div>
+  <div class="container-fluid d-flex justify-content-center">
+    <dir-pagination-controls pagination-id="search" on-page-change="resetPos()"></dir-pagination-controls>
+  </div>
