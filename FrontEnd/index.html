@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FrontEnd</title>
-    
+
     <link rel="stylesheet" href="css/main.css" type="text/css" />
 
     <!-- Latest compiled and minified CSS -->
@@ -35,13 +35,11 @@
     <script src="js/controller.js"></script>
     <!-- Contains all services -->
     <script src="js/services.js"></script>
-  <!-- Contains all custom filters -->
-    <script src="js/filters.js"></script>
+    <script src="js/components/search.component.js"></script>
   </head>
   <body data-ng-controller="appController">
     <navigation data-ng-include="'views/nav.html'"></navigation>
-    <div class="alert alert-info" data-ng-show="loading">Loading</div>
-    <main data-ng-cloak data-ng-view>
-    </main>
+    <div class="alert alert-primary" data-ng-show="alert">{{status}}</div>
+    <main data-ng-cloak data-ng-view></main>
   </body>
 </html>
