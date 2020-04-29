@@ -6,7 +6,10 @@ var app = angular.module("WAI", ["angular.filter", "ngRoute", "ngAnimate", "ngCo
 app.config([
   "$routeProvider",
   "paginationTemplateProvider",
-  function ($routeProvider, paginationTemplateProvider) {
+  "$locationProvider",
+  function ($routeProvider, paginationTemplateProvider, $locationProvider) {
+
+    $locationProvider.html5Mode(true);
     /**
      *
      * Route Info
