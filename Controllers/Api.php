@@ -34,7 +34,7 @@ class Api extends Controller
      */
     public function printPresentationsQueryAll()
     {
-        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.type, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
+        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
         INNER JOIN authors auth ON pap_auth.authorID = auth.authorID";
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery);
@@ -46,7 +46,7 @@ class Api extends Controller
     public function printPresentationsQuerySingle($apiOpt1)
     {
         $slotsID = self::test_input($apiOpt1);
-        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.type, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id  INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
+        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id  INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
         INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
          WHERE pap_auth.id=:id";
         $params = [ ':id' => $slotsID];
@@ -65,7 +65,7 @@ class Api extends Controller
     {
         $searchType = self::test_input($apiOpt1);
 
-        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.type, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a
+        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a
          INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
          INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
          WHERE a.title LIKE :title OR a.abstract LIKE :abstract";
@@ -82,7 +82,7 @@ class Api extends Controller
     {
         $searchType = self::test_input($apiOpt1);
         $sessionType = self::test_input($apiOpt2);
-        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.type, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a
+        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a
          INNER JOIN 'sessions' s  ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
          INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
          WHERE (a.title LIKE :title OR a.abstract LIKE :abstract) AND s.type=:sessionType";
@@ -97,11 +97,11 @@ class Api extends Controller
     public function printPresentationsQueryCategory($apiOpt2)
     {
         $sessionType = self::test_input($apiOpt2);
-        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.type, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a 
+        $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.type, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a 
         INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
          INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
         WHERE s.type=:sessionType";
-        $params = [ 'sessionType' => '%'.$sessionType.'%' ];
+        $params = [ 'sessionType' => $sessionType ];
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery, $params);
         echo $response;
