@@ -6,7 +6,7 @@ app.component("search", {
       $scope.search = angular.copy($scope.master);
       $scope.category = angular.copy($scope.master);
     };
-    $scope.dropDownFilter = {
+    $scope.dropDownSearchFilter = {
       option: "paper",
       options: [
         "miscellaneous",

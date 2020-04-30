@@ -116,7 +116,7 @@ app.controller("presentationDetailedController", [
         .getApiRequest(request)
         .then(
           function (response) {
-            $scope.presentations = response.result.data.result;
+            $scope.search = response.result.data.result;
           },
           function (err) {
             $scope.status = "Unable to load data " + err;
@@ -130,6 +130,42 @@ app.controller("presentationDetailedController", [
         });
     };
     getScheduleDetailed("presentations/" + $routeParams.id);
+
+    $scope.resetPos = function () {
+      window.scrollTo(0, 0);
+    };
+  },
+]);
+
+app.controller("presentationCategoryController", [
+  "$scope",
+  "dataService",
+  "$routeParams",
+  function ($scope, dataService, $routeParams) {
+    $scope.$emit("LOAD");
+    var getPresentationCategory = function (request) {
+      dataService
+        .getApiRequest(request)
+        .then(
+          function (response) {
+            $scope.presentations = response.result.data.result;
+          },
+          function (err) {
+            $scope.status = "Unable to load data " + err;
+          },
+          function (notify) {
+            console.log(notify);
+          }
+        )
+        .finally(function () {
+          if ($scope.presentations.length > 0) {
+            $scope.$emit("UNLOAD");
+          } else {
+            $scope.$emit("SearchNoReturn");
+          }
+        });
+    };
+    getPresentationCategory("presentations/category/" + $routeParams.cat);
 
     $scope.resetPos = function () {
       window.scrollTo(0, 0);

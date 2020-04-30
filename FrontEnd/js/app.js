@@ -29,11 +29,11 @@ app.config([
         controller: "presentationController",
       })
       .when("/presentation/:id", {
-        templateUrl: "views/presentationDetailed.html",
+        templateUrl: "views/presentationSearch.html",
         controller: "presentationDetailedController",
       })
       .when("/presentation/category/:cat", {
-        templateUrl: "views/presentationSearch.html",
+        templateUrl: "views/presentation.html",
         controller: "presentationCategoryController",
       })
       .when("/presentation/search/:term", {
