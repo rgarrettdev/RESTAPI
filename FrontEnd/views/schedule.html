@@ -11,13 +11,13 @@
         {{sessionDay}}
       </h4>
       <div
-        data-ng-click="showPrentationBreifDetails = ! showPrentationBreifDetails"
+
         data-ng-repeat="sessionTime in sessionDetails | unique: 'time' | orderBy: 'time'"
       >
         <a
           class="card-link scheduleTime"
           data-ng-show="showTimeDetails"
-          data-ng-href="./schedule/{{sessionTime.id}}"
+          data-ng-href="/FrontEnd/schedule/{{sessionTime.id}}"
         >
           {{sessionTime.time}}
         </a>

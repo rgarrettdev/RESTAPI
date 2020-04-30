@@ -7,7 +7,7 @@ app.service("dataService", [
      */
     var baseUrl = "http://localhost:8066/api/";
     /**
-     * method to promise when fulfilled calls the success method.
+     * method to promise when fulfilled calls the then method on success.
      */
     this.getApiRequest = function (request) {
       var promise = $q.defer(), //The promise
@@ -17,7 +17,7 @@ app.service("dataService", [
         .get(apiRequest)
         .then(function (response) {
           promise.resolve({
-            data: response.data,
+            result: response.data,
           });
         })
         .catch(function (err) {

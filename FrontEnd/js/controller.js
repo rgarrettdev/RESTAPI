@@ -29,7 +29,7 @@ app.controller("scheduleController", [
         .getApiRequest(request)
         .then(
           function (response) {
-            $scope.schedule = response.data;
+            $scope.schedule = response.result.data.result;
           },
           function (err) {
             $scope.status = "Unable to load data " + err;
@@ -57,7 +57,7 @@ app.controller("scheduleDetailedController", [
         .getApiRequest(request)
         .then(
           function (response) {
-            $scope.schedule = response.data;
+            $scope.schedule = response.result.data.result;
           },
           function (err) {
             $scope.status = "Unable to load data " + err;
@@ -84,7 +84,7 @@ app.controller("presentationController", [
         .getApiRequest(request)
         .then(
           function (response) {
-            $scope.presentations = response.data;
+            $scope.presentations = response.result.data.result;
           },
           function (err) {
             $scope.status = "Unable to load data " + err;
@@ -116,7 +116,7 @@ app.controller("presentationDetailedController", [
         .getApiRequest(request)
         .then(
           function (response) {
-            $scope.presentations = response.data;
+            $scope.presentations = response.result.data.result;
           },
           function (err) {
             $scope.status = "Unable to load data " + err;
@@ -148,7 +148,8 @@ app.controller("presentationSearchController", [
         .getApiRequest(request)
         .then(
           function (response) {
-            $scope.search = response.data;
+            $scope.search = response.result.data.result;
+            console.log($scope.search);
           },
           function (err) {
             $scope.status = "Unable to load data " + err;
@@ -167,6 +168,43 @@ app.controller("presentationSearchController", [
     };
     getPresentationSearch("presentations/search/" + $routeParams.term);
 
+    $scope.resetPos = function () {
+      window.scrollTo(0, 0);
+    };
+  },
+]);
+
+app.controller("presentationSearchCategoryController", [
+  "$scope",
+  "dataService",
+  "$routeParams",
+  function ($scope, dataService, $routeParams) {
+    $scope.$emit("LOAD");
+    var getPresentationSearchCategory = function (request) {
+      dataService
+        .getApiRequest(request)
+        .then(
+          function (response) {
+            $scope.search = response.result.data.result;
+            console.log($scope.search);
+          },
+          function (err) {
+            $scope.status = "Unable to load data " + err;
+          },
+          function (notify) {
+            console.log(notify);
+          }
+        )
+        .finally(function () {
+          if ($scope.search.length > 0) {
+            $scope.$emit("UNLOAD");
+          } else {
+            $scope.$emit("SearchNoReturn");
+          }
+        });
+    };
+    console.log($routeParams.term + "/" + $routeParams.cat);
+    getPresentationSearchCategory("presentations/search/" + $routeParams.term + "/" + $routeParams.cat);
     $scope.resetPos = function () {
       window.scrollTo(0, 0);
     };

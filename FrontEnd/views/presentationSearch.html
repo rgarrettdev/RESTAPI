@@ -1,12 +1,22 @@
-<search></search>
-
-<ul dir-paginate="presentation in search | itemsPerPage: 5" pagination-id="search">
-    <li>Title: {{presentation.title}}</li>
-    <li>URL: {{presentation.doiURL}}</li>
-    <li>Abstract: {{presentation.abstract}}</li>
-    <li>Authors: {{presentation.author}}</li>
-    <li>Author Affiliation: {{presentation.affiliation}}</li>
+<div class="container-fluid">
+  <search></search>
+  <ul
+    class="list-group mb-5"
+    dir-paginate="presentation in search | itemsPerPage: 5"
+    pagination-id="search"
+  >
+    <li class="list-group-item">Title: {{presentation.title}}</li>
+    <li class="list-group-item">URL: {{presentation.doiURL}}</li>
+    <li class="list-group-item">Abstract: {{presentation.abstract}}</li>
+    <li class="list-group-item">Authors: {{presentation.author}}</li>
+    <li class="list-group-item">
+      Author Affiliation: {{presentation.affiliation}}
+    </li>
   </ul>
-  <div class="container-fluid d-flex justify-content-center">
-    <dir-pagination-controls pagination-id="search" on-page-change="resetPos()"></dir-pagination-controls>
-  </div>
+</div>
+<div class="container-fluid d-flex justify-content-center">
+  <dir-pagination-controls
+    pagination-id="search"
+    on-page-change="resetPos()"
+  ></dir-pagination-controls>
+</div>

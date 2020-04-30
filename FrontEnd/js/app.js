@@ -32,16 +32,16 @@ app.config([
         templateUrl: "views/presentationDetailed.html",
         controller: "presentationDetailedController",
       })
-      .when("/presentation/category/", {
-        templateUrl: "views/presentationCategory.html",
+      .when("/presentation/category/:cat", {
+        templateUrl: "views/presentationSearch.html",
         controller: "presentationCategoryController",
       })
       .when("/presentation/search/:term", {
         templateUrl: "views/presentationSearch.html",
         controller: "presentationSearchController",
       })
-      .when("/presentation/search/:srch/category/:cat", {
-        templateUrl: "views/presentationSearchCategory.html",
+      .when("/presentation/search/:term/category/:cat", {
+        templateUrl: "views/presentationSearch.html",
         controller: "presentationSearchCategoryController",
       })
       .when("/about", {
