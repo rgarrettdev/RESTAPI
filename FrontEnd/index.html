@@ -38,9 +38,10 @@
     <script src="js/services.js"></script>
     <script src="js/components/search.component.js"></script>
     <script src="js/components/filter.component.js"></script>
+    <script src="js/components/navigation.component.js"></script>
   </head>
   <body data-ng-controller="appController">
-    <navigation data-ng-include="'views/nav.html'"></navigation>
+    <navigation></navigation>
     <div class="alert alert-primary" data-ng-show="alert">{{status}}</div>
     <main data-ng-cloak data-ng-view></main>
   </body>

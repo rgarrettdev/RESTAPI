@@ -239,10 +239,36 @@ app.controller("presentationSearchCategoryController", [
           }
         });
     };
-    console.log($routeParams.term + "/" + $routeParams.cat);
+
     getPresentationSearchCategory("presentations/search/" + $routeParams.term + "/" + $routeParams.cat);
     $scope.resetPos = function () {
       window.scrollTo(0, 0);
+    };
+  },
+]);
+
+app.controller("loginController", [
+  "$scope",
+  "dataService",
+  function ($scope, dataService) {
+    $scope.loginUser = function () {
+
+      dataService
+        .postUserLogin($scope.user)
+        .then(
+          function (response) {
+            console.log(response);
+          },
+          function (err) {
+            $scope.status = "Unable to load data " + err;
+          },
+          function (notify) {
+            console.log(notify);
+          }
+        )
+        .finally(function () {
+            $scope.$emit("UNLOAD");
+        });
     };
   },
 ]);

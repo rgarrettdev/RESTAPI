@@ -20,6 +20,10 @@ app.config([
         templateUrl: "views/schedule.html",
         controller: "scheduleController",
       })
+      .when("/login", {
+        templateUrl: "views/login.html",
+        controller: "loginController",
+      })
       .when("/schedule/:id", {
         templateUrl: "views/scheduleDetailed.html",
         controller: "scheduleDetailedController",
