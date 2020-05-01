@@ -1,25 +1,27 @@
 <?php
 
-class Route {
+class Route
+{
     public static $validRoutes = array();
     public static $validApis = array();
 
-    public static function set($route, $api, $function) {
+    public static function set($route, $api, $function)
+    {
         self::$validRoutes[] = $route;
         self::$validApis[] = $api;
 
         $apiObj = new Api();
 
-            /**
-             * If statments allow the api to respond depending on the condition.
-             */
+        /**
+         * If statments allow the api to respond depending on the condition.
+         */
 
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             /**
-             * 
+             *
              * This check allows for full control of the api,
              * so if a dev accidentally added more path paramaters an error is returned.
-             * 
+             *
              */
             $url = $_SERVER['REQUEST_URI'];
             $url = parse_url($url, PHP_URL_PATH);
@@ -49,41 +51,41 @@ class Route {
                     $apiOpt1 = $_GET['apiParam1'];
                     $function->__invoke();
                     http_response_code(200);
-                    if ($apiOpt1 != NULL && $api == 'schedule') {
+                    if ($apiOpt1 != null && $api == 'schedule') {
                         $apiObj->printScheduleQuerySingle($apiOpt1);
-                    } elseif ($apiOpt1 == NULL && $api == 'schedule') {
+                    } elseif ($apiOpt1 == null && $api == 'schedule') {
                         $apiObj->printScheduleQueryAll();
-                    } elseif ($apiOpt1 == NULL && $api == 'presentations') {
+                    } elseif ($apiOpt1 == null && $api == 'presentations') {
                         $apiObj->printPresentationsQueryAll();
-                    } elseif ($apiOpt1 != NULL && $api == 'presentations'){
+                    } elseif ($apiOpt1 != null && $api == 'presentations') {
                         $apiObj->printPresentationsQuerySingle($apiOpt1);
                     } else {
                         echo("ERROR: NOT SUPPORTED ENDPOINT");
                         http_response_code(405);
                     }
-                /**
-                 * Normal checks, now with an another apiParam called apiParam2.
-                 * Checks what api options have been used to either search/category.
-                 * Executed specfic queries based on what condition is met.
-                 */
-                } elseif($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && isset($_GET['apiParam2']) == true && sizeof($_GET) == 4) {
+                    /**
+                     * Normal checks, now with an another apiParam called apiParam2.
+                     * Checks what api options have been used to either search/category.
+                     * Executed specfic queries based on what condition is met.
+                     */
+                } elseif ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && isset($_GET['apiParam2']) == true && sizeof($_GET) == 4) {
                     $apiOpt1 = $_GET['apiParam1'];
                     $apiOpt2 = $_GET['apiParam2'];
                     $function->__invoke();
                     if ($apiOpt1 == 'search') {
                         $apiObj->printPresentationsQuerySearch($apiOpt2);
-                    } elseif ($apiOpt1 == 'category' && $apiOpt2 == NULL) {
+                    } elseif ($apiOpt1 == 'category' && $apiOpt2 == null) {
                         $apiObj->printShowAllCatrgories();
                     } elseif ($apiOpt1 == 'category') {
                         $apiObj->printPresentationsQueryCategory($apiOpt2);
                     }
                     http_response_code(200);
                 /**
-                 * This elseif allows for a futher apiParam that allows the search api to filter by category. 
-                 *                                          
+                 * This elseif allows for a futher apiParam that allows the search api to filter by category.
+                 *
                  * An example of this call would be: localhost/api/presentations/search/virtual/paper
                  */
-                } elseif($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && isset($_GET['apiParam2']) == true
+                } elseif ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && isset($_GET['apiParam2']) == true
                  && isset($_GET['apiParam3']) == true && sizeof($_GET) == 5) {
                     $apiOpt1 = $_GET['apiParam1'];
                     $apiOpt2 = $_GET['apiParam2'];
@@ -98,10 +100,10 @@ class Route {
                     http_response_code(200);
                 }
             } else {
-             /**
-              * Echo error to the endpoint.
-              * 
-              */
+                /**
+                 * Echo error to the endpoint.
+                 *
+                 */
                 echo("ERROR: TOO MANY ENDPOINT ARGUMENTS");
                 http_response_code(405);
             }
@@ -109,18 +111,11 @@ class Route {
         /**
          * POST.
          */
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && sizeof($_GET) == 3) {
-                $apiOpt1 = $_GET['apiParam1'];
-                $function->__invoke();
-                if ($api == 'login' && $apiOpt1 == NULL) {
-                    $loginApiEmail = $_POST['email'];
-                    $apiObj->loginRequest($loginApiEmail);
-                } else {
-                    echo("ERROR: NOT SUPPORTED POST ENDPOINT");
-                    http_response_code(405);
-                }
-            }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {
+            $_POST = json_decode(file_get_contents('php://input'), true);
+            $loginApiEmail = $_POST['email'];
+            $loginApiPass = $_POST['password'];
+            $apiObj->loginRequest($_POST['email'], $_POST['password']);
         }
         if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
             if ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && isset($_GET['apiParam2']) == true && sizeof($_GET) == 4) {
@@ -138,18 +133,17 @@ class Route {
     /**
      * This function parses put header. PHP has no built in $_PUT
      */
-    protected static function putParse() {
+    protected static function putParse()
+    {
         parse_str(file_get_contents("php://input"), $_PUT);
         foreach ($_PUT as $key => $value) {
             unset($_PUT[$key]);
             $_PUT[str_replace('amp;', '', $key)] = $value;
-        /**
-         * Content type needs to be specified as when PUT header is parsed in Route.php, content type reverts to default settings.
-         */
-        header("Content-Type: application/json; charset=UTF-8");
+            /**
+             * Content type needs to be specified as when PUT header is parsed in Route.php, content type reverts to default settings.
+             */
+            header("Content-Type: application/json; charset=UTF-8");
         }
         return $_PUT;
     }
 }
-
-?>

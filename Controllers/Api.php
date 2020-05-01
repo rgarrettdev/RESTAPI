@@ -109,10 +109,35 @@ class Api extends Controller
     /**
     * Prints the query for /api/login/
     */
-    public function loginRequest($loginApiUser)
+    public function loginRequest($loginApiUser, $loginPassword)
     {
-        $email = self::test_input($loginApiUser);
-        print_r(Database::loginRequest("SELECT * FROM users WHERE email=:email", [ ':email' => $email ]));
+        $email = $loginApiUser;
+        $password = $loginPassword;
+
+        $sqlQuery = "SELECT * FROM users WHERE email=:email";
+        $params = [ ':email' => $email ];
+        $response = new JSONRecordSet();
+        $response = $response->getJSONRecordSet($sqlQuery, $params);
+        $response = json_decode($response);
+        $checkPasswordData = (array) $response->data->result[0];
+
+        if (password_verify($password, $checkPasswordData['password'])) {
+            $token = array();
+            $token['iat'] = time();
+            $token['iss'] = 'localhost';
+            $token['exp'] = time() + (3600); //expires in an hour
+            $token['email'] = $checkPasswordData['email'];
+            $token['admin'] = $checkPasswordData['admin'];
+            $secretKey = ApplicationRegistry::getSecretKey();
+            $encodedToken = JWT::encode($token, $secretKey);//Change key to a random string.
+            $response = json_encode(array("message" => "Success", "token" => $encodedToken), JSON_PRETTY_PRINT);
+            http_response_code(200);
+            setcookie("user", $encodedToken, time() + (3600), "/");
+        //return $response;
+        } else {
+            echo("Password incorrect");
+            http_response_code(401);
+        }
     }
     /**
      * Prints the query for /api/login/
