@@ -130,14 +130,34 @@ class Api extends Controller
             $token['admin'] = $checkPasswordData['admin'];
             $secretKey = ApplicationRegistry::getSecretKey();
             $encodedToken = JWT::encode($token, $secretKey);//Change key to a random string.
-            $response = json_encode(array("message" => "Success", "token" => $encodedToken), JSON_PRETTY_PRINT);
             http_response_code(200);
-            setcookie("user", $encodedToken, time() + (3600), "/");
+            setcookie("authentication", $encodedToken, time() + (3600), "/", false);
+            setcookie("loggedIn", true, time() + (3600), "/", false);
         //return $response;
         } else {
             echo("Password incorrect");
             http_response_code(401);
         }
+    }
+
+    public function logout()
+    {
+        if (isset($_COOKIE["authentication"])) {
+            unset($_COOKIE["authentication"]);
+            setcookie("authentication", '', time() - 3600, '/'); // empty value and old timestamp
+        }
+        if (isset($_COOKIE["loggedIn"])) {
+            unset($_COOKIE["loggedIn"]);
+            setcookie("loggedIn", '', time() - 3600, '/'); // empty value and old timestamp
+        }
+        echo json_encode(
+            array(
+                'data' => array(
+                            "result"=>"LoggedOut"
+                            )
+                ),
+            JSON_PRETTY_PRINT
+        );
     }
     /**
      * Prints the query for /api/login/

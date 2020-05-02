@@ -5,7 +5,8 @@
  */
 app.controller("appController", [
   "$scope",
-  function ($scope) {
+  "$window",
+  function ($scope, $window) {
     $scope.$on("LOAD", function () {
       $scope.alert = true;
       $scope.status = "Loading";
@@ -15,6 +16,9 @@ app.controller("appController", [
     });
     $scope.$on("SearchNoReturn", function () {
       $scope.status = "No results found";
+    });
+    $scope.$on("Login", function () {
+      $window.location.reload();
     });
   },
 ]);
@@ -240,7 +244,9 @@ app.controller("presentationSearchCategoryController", [
         });
     };
 
-    getPresentationSearchCategory("presentations/search/" + $routeParams.term + "/" + $routeParams.cat);
+    getPresentationSearchCategory(
+      "presentations/search/" + $routeParams.term + "/" + $routeParams.cat
+    );
     $scope.resetPos = function () {
       window.scrollTo(0, 0);
     };
@@ -250,9 +256,10 @@ app.controller("presentationSearchCategoryController", [
 app.controller("loginController", [
   "$scope",
   "dataService",
-  function ($scope, dataService) {
+  "$location",
+  "$cookies",
+  function ($scope, dataService, $location, $cookies) {
     $scope.loginUser = function () {
-
       dataService
         .postUserLogin($scope.user)
         .then(
@@ -267,7 +274,13 @@ app.controller("loginController", [
           }
         )
         .finally(function () {
-            $scope.$emit("UNLOAD");
+          if ($cookies.get('loggedIn') == 1) {
+            $scope.$emit("Login");
+            window.location = $location.path("/"); //On a sucessful login, redirect to index. 
+          }
+          else {
+            console.log("Invalid");
+          }
         });
     };
   },

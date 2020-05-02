@@ -12,7 +12,7 @@ app.service("dataService", [
     this.getApiRequest = function (request) {
       var promise = $q.defer(), //The promise
         apiRequest = baseUrl + request; //Request
-
+      console.log(apiRequest);
       $http
         .get(apiRequest)
         .then(function (response) {
@@ -29,19 +29,24 @@ app.service("dataService", [
       var promise = $q.defer(), //The promise
         apiRequest = baseUrl + "login/"; //Request
       console.log(apiRequest);
+      if (request == undefined) {
+        return promise.promise;
+      } else {
         data = {
           email: request.email,
           password: request.password
         }
         console.log(data);
-      $http.post(apiRequest,data)
-        .then(function (response) {
-          promise.resolve(response);
-        })
-        .catch(function (err) {
-          promise.reject(err);
-        });
-      return promise.promise;
+        $http.post(apiRequest,data)
+          .then(function (response) {
+            promise.resolve(response);
+          })
+          .catch(function (err) {
+            promise.reject(err);
+          });
+        return promise.promise;
+      }
+
     };
   },
 ]);

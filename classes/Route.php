@@ -40,7 +40,9 @@ class Route
                  * Then executes the function via invoke. This can be seen in FrontController.php
                  */
                 } elseif ($_GET['url'] == $route && $_GET['api'] == $api && sizeof($_GET) == 2) {
-                    $function->__invoke();
+                    if ($_GET['api'] == 'logout') {
+                        $apiObj->logout();
+                    }
                     http_response_code(200);
                 /**
                  * Does the normal checks, also with if the apiParam has been set and get header is size of 3.
