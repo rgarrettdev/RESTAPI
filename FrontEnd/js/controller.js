@@ -54,7 +54,9 @@ app.controller("scheduleDetailedController", [
   "$scope",
   "dataService",
   "$routeParams",
-  function ($scope, dataService, $routeParams) {
+  "$cookies",
+  "dataTransfer",
+  function ($scope, dataService, $routeParams, $cookies, dataTransfer) {
     $scope.$emit("LOAD");
     var getScheduleDetailed = function (request) {
       dataService
@@ -75,6 +77,19 @@ app.controller("scheduleDetailedController", [
         });
     };
     getScheduleDetailed("schedule/" + $routeParams.id);
+
+    $scope.editor = function (schedule) {
+      console.log(schedule);
+      dataTransfer.setSchedule(schedule);
+      $scope.$broadcast("showEditor");
+      $scope.editorVisible = true;
+
+    };
+
+    $scope.adminLogin = false;
+    if ($cookies.get("isAdmin") == 1) {
+      $scope.adminLogin = true;
+    }
   },
 ]);
 
@@ -261,7 +276,7 @@ app.controller("loginController", [
   function ($scope, dataService, $location, $cookies) {
     $scope.loginUser = function () {
       dataService
-        .postUserLogin($scope.user)
+        .postApiRequest($scope.user)
         .then(
           function (response) {
             console.log(response);
@@ -274,11 +289,10 @@ app.controller("loginController", [
           }
         )
         .finally(function () {
-          if ($cookies.get('loggedIn') == 1) {
+          if ($cookies.get("loggedIn") == 1) {
             $scope.$emit("Login");
-            window.location = $location.path("/"); //On a sucessful login, redirect to index. 
-          }
-          else {
+            window.location = $location.path("/"); //On a sucessful login, redirect to index.
+          } else {
             console.log("Invalid");
           }
         });

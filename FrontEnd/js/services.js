@@ -25,7 +25,7 @@ app.service("dataService", [
         });
       return promise.promise;
     };
-    this.postUserLogin = function (request) {
+    this.postApiRequest = function (request) {
       var promise = $q.defer(), //The promise
         apiRequest = baseUrl + "login/"; //Request
       console.log(apiRequest);
@@ -34,10 +34,11 @@ app.service("dataService", [
       } else {
         data = {
           email: request.email,
-          password: request.password
-        }
+          password: request.password,
+        };
         console.log(data);
-        $http.post(apiRequest,data)
+        $http
+          .post(apiRequest, data)
           .then(function (response) {
             promise.resolve(response);
           })
@@ -46,9 +47,51 @@ app.service("dataService", [
           });
         return promise.promise;
       }
+    };
 
+    this.putApiRequest = function (request) {
+      var promise = $q.defer(), //The promise
+        apiRequest = baseUrl + "login/"; //Request
+      console.log(apiRequest);
+      if (request == undefined) {
+        return promise.promise;
+      } else {
+        data = {
+          email: request.email,
+          password: request.password,
+        };
+        console.log(data);
+        $http
+          .post(apiRequest, data)
+          .then(function (response) {
+            promise.resolve(response);
+          })
+          .catch(function (err) {
+            promise.reject(err);
+          });
+        return promise.promise;
+      }
     };
   },
 ]);
 
+app.factory("dataTransfer", function () {
+  var data = [];
 
+  var setSchedule = function (newObj) {
+    data.push(newObj);
+  };
+  var getSchedule = function () {
+    return data;
+  }
+
+  var resetSchedule = function () {
+    data = [];
+  }
+
+  return {
+    setSchedule: setSchedule,
+    getSchedule: getSchedule,
+    resetSchedule: resetSchedule,
+  };
+});

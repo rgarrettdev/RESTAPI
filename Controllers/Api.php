@@ -133,7 +133,10 @@ class Api extends Controller
             http_response_code(200);
             setcookie("authentication", $encodedToken, time() + (3600), "/", false);
             setcookie("loggedIn", true, time() + (3600), "/", false);
-        //return $response;
+            if ($checkPasswordData['admin'] == 1) {
+                setcookie("isAdmin", true, time() + (3600), "/", false);
+            }
+            //return $response;
         } else {
             echo("Password incorrect");
             http_response_code(401);
@@ -149,6 +152,10 @@ class Api extends Controller
         if (isset($_COOKIE["loggedIn"])) {
             unset($_COOKIE["loggedIn"]);
             setcookie("loggedIn", '', time() - 3600, '/'); // empty value and old timestamp
+        }
+        if (isset($_COOKIE["isAdmin"])) {
+            unset($_COOKIE["isAdmin"]);
+            setcookie("isAdmin", '', time() - 3600, '/'); // empty value and old timestamp
         }
         echo json_encode(
             array(
@@ -167,11 +174,11 @@ class Api extends Controller
     {
         $data = self::test_input($updateRequestBody);
         $id = self::test_input($updateID);
-        if (!isset($_COOKIE['user'])) {
+        if (!isset($_COOKIE['authentication'])) {
             echo json_encode(array( "message" => "Cookie not set"), JSON_PRETTY_PRINT);
         } else {
             try {
-                $decoded = JWT::decode($_COOKIE['user'], ApplicationRegistry::getSecretKey());
+                $decoded = JWT::decode($_COOKIE['authentication'], ApplicationRegistry::getSecretKey());
                 if ($decoded->admin == 1) {
                     Database::query("UPDATE 'sessions' SET chair=:chair WHERE id=:id", [ ':chair' => $data, ':id' => $id ]);
                     echo json_encode(array( "message" => "Successfully updated Session Chair"), JSON_PRETTY_PRINT);

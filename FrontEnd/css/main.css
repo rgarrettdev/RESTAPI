@@ -18,3 +18,12 @@ main.ng-enter.ng-enter-active {
 .scheduleTime.ng-hide-remove {
   transition: all linear 0.5s;
 }
+
+/* responsively apply fixed position */
+@media (min-width: 576px){
+  #left {
+      position: fixed;
+      top: 10em;
+      bottom: 10em;
+  }
+}
