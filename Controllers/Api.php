@@ -25,8 +25,9 @@ class Api extends Controller
     public function printScheduleQuerySingle($apiOpt1)
     {
         $scheduleID = self::test_input($apiOpt1);
-        $sqlQuery = "SELECT s.title, s.description, s.chair, s.room, sl.day, sl.time, pap_auth.id FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id  INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
-        WHERE sl.id=:id";
+        $sqlQuery = "SELECT a.title, s.description, s.chair, s.room, sl.day, sl.time, pap_auth.id FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id
+          INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id 
+        WHERE sl.id=:id AND s.type!='break' AND s.type!='miscellaneous'";
         $params = [ ':id' => $scheduleID ];
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery, $params);
@@ -38,7 +39,7 @@ class Api extends Controller
     public function printPresentationsQueryAll()
     {
         $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
-        INNER JOIN authors auth ON pap_auth.authorID = auth.authorID";
+        INNER JOIN authors auth ON pap_auth.authorID = auth.authorID ";
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery);
         echo $response;
