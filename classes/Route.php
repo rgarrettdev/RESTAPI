@@ -4,12 +4,23 @@ class Route
 {
     public static $validRoutes = array();
     public static $validApis = array();
-
     public static function set($route, $api, $function)
     {
         self::$validRoutes[] = $route;
         self::$validApis[] = $api;
 
+        if ($_GET['url'] == $route) {
+            $function->__invoke();
+            self::setRequest($route, $api);
+        } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            self::setRequest($route, $api);
+        } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+            self::setRequest($route, $api);
+        }
+    }
+
+    public static function setRequest($route, $api)
+    {
         $apiObj = new Api();
 
         /**
@@ -33,7 +44,8 @@ class Route
                  * Then executes the function via invoke. This can be seen in FrontController.php
                  */
                 if ($_GET['url'] == $route && sizeof($_GET) == 1) {
-                    $apiObj->printMasterQuery();
+                    
+                    // $apiObj->printMasterQuery();
                     http_response_code(200);
                 /**
                  * Checks if url is a valid route, then checks if api is valid. The get header is size of 2.
@@ -51,7 +63,7 @@ class Route
                  */
                 } elseif ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && sizeof($_GET) == 3) {
                     $apiOpt1 = $_GET['apiParam1'];
-                    $function->__invoke();
+                    
                     http_response_code(200);
                     if ($apiOpt1 != null && $api == 'schedule') {
                         $apiObj->printScheduleQuerySingle($apiOpt1);
@@ -73,7 +85,7 @@ class Route
                 } elseif ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && isset($_GET['apiParam2']) == true && sizeof($_GET) == 4) {
                     $apiOpt1 = $_GET['apiParam1'];
                     $apiOpt2 = $_GET['apiParam2'];
-                    $function->__invoke();
+                    
                     if ($apiOpt1 == 'search') {
                         $apiObj->printPresentationsQuerySearch($apiOpt2);
                     } elseif ($apiOpt1 == 'category' && $apiOpt2 == null) {
@@ -92,7 +104,7 @@ class Route
                     $apiOpt1 = $_GET['apiParam1'];
                     $apiOpt2 = $_GET['apiParam2'];
                     $apiOpt3 = $_GET['apiParam3'];
-                    $function->__invoke();
+                    
                     if ($apiOpt1 == 'search') {
                         $apiObj->printPresentationsQuerySearchWithCategory($apiOpt2, $apiOpt3);
                     } elseif ($apiOpt1 == 'category') {
