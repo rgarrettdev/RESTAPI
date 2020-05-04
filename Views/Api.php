@@ -7,3 +7,4 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Request-Method: POST');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, POST, PUT, OPTIONS');
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");

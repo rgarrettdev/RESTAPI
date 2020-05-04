@@ -23,6 +23,12 @@ app.controller("appController", [
   },
 ]);
 
+app.controller("homeController", [
+  function () {
+
+  },
+]);
+
 app.controller("scheduleController", [
   "$scope",
   "dataService",

@@ -18,6 +18,14 @@ main.ng-enter.ng-enter-active {
 .scheduleTime.ng-hide-remove {
   transition: all linear 0.5s;
 }
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.footer {
+  margin-top: auto;
+}
 
 /* responsively apply fixed position */
 @media (min-width: 576px){

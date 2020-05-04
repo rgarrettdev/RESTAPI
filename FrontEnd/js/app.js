@@ -17,6 +17,10 @@ app.config([
      */
     $routeProvider
       .when("/", {
+        templateUrl: "views/home.html",
+        controller: "homeController",
+      })
+      .when("/schedule", {
         templateUrl: "views/schedule.html",
         controller: "scheduleController",
       })

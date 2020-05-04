@@ -27,7 +27,7 @@ class Api extends Controller
         $scheduleID = self::test_input($apiOpt1);
         $sqlQuery = "SELECT a.title, s.description, s.chair, s.room, sl.day, sl.time, pap_auth.id FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id
           INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id 
-        WHERE sl.id=:id AND s.type!='break' AND s.type!='miscellaneous'";
+        WHERE sl.id=:id";
         $params = [ ':id' => $scheduleID ];
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery, $params);
@@ -39,7 +39,7 @@ class Api extends Controller
     public function printPresentationsQueryAll()
     {
         $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
-        INNER JOIN authors auth ON pap_auth.authorID = auth.authorID ";
+        INNER JOIN authors auth ON pap_auth.authorID = auth.authorID WHERE s.type!='break' AND s.type!='miscellaneous' ";
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery);
         echo $response;
@@ -72,7 +72,7 @@ class Api extends Controller
         $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a
          INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
          INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
-         WHERE a.title LIKE :title OR a.abstract LIKE :abstract";
+         WHERE a.title LIKE :title OR a.abstract LIKE :abstract AND s.type!='break' AND s.type!='miscellaneous'";
 
         $params = [ ':title' => '%'.$searchType.'%', ':abstract' => '%'.$searchType.'%'  ];
         $response = new JSONRecordSet();
@@ -89,7 +89,7 @@ class Api extends Controller
         $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a
          INNER JOIN 'sessions' s  ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
          INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
-         WHERE (a.title LIKE :title OR a.abstract LIKE :abstract) AND s.type=:sessionType";
+         WHERE (a.title LIKE :title OR a.abstract LIKE :abstract) AND s.type=:sessionType AND s.type!='break' AND s.type!='miscellaneous'";
         $params = [ ':title' => '%'.$searchType.'%', ':abstract' => '%'.$searchType.'%', ':sessionType' => $sessionType];
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery, $params);
