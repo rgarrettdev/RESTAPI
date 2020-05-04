@@ -6,12 +6,14 @@ List of all supported endpoints.
  `/api/schedule/:session`\
  `/api/schedule/update/:id`\
  `/api/presentations/`\
- `/api/presentations/:session`\
+ `/api/presentations/:id`\
  `/api/presentations/search/:searchterm`\
+  `/api/presentations/search/:searchterm/:categoryname`\
  `/api/presentations/category/:categoryname`\
- `/api/login/`
+ `/api/login/`\
+ `/api/logout`
 
 ### Read more detail through the documentation
 Found at the documentation endpoint. \
-`/documentation/`
+`/documentation`
 
