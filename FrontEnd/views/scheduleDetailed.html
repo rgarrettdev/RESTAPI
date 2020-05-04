@@ -5,7 +5,7 @@
       <edit data-ng-show="editorVisible" id="editor"></edit>
   </div>
   <div class="col-sm-9 col-12 offset-0 offset-sm-3 py-2">
-    <div class="card" data-ng-repeat="sessionInfo in schedule">
+    <div class="card" dir-paginate="sessionInfo in schedule | itemsPerPage: 10">
       <div class="card-body text-center" id="container">
         <h4 class="card-title">
           {{sessionInfo.title}}
@@ -45,6 +45,11 @@
           </button>
         </div>
       </div>
+    </div>
+    <div class="container-fluid d-flex justify-content-center">
+      <dir-pagination-controls
+        on-page-change="resetPos()"
+      ></dir-pagination-controls>
     </div>
   </div>
 </div>

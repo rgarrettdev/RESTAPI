@@ -78,6 +78,10 @@ app.controller("scheduleDetailedController", [
     };
     getScheduleDetailed("schedule/" + $routeParams.id);
 
+    $scope.resetPos = function () {
+      window.scrollTo(0, 0);
+    };
+
     $scope.editor = function (schedule) {
       dataTransfer.resetSchedule();
       console.log(schedule);
