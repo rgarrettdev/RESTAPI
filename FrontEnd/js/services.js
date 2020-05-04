@@ -25,6 +25,9 @@ app.service("dataService", [
         });
       return promise.promise;
     };
+    /**
+     * post method when fulfilled calls the then method on success.
+     */
     this.postApiRequest = function (request) {
       var promise = $q.defer(), //The promise
         apiRequest = baseUrl + "login/"; //Request
@@ -48,21 +51,24 @@ app.service("dataService", [
         return promise.promise;
       }
     };
-
+    /**
+     * put method when fulfilled calls the then method on success.
+     */
     this.putApiRequest = function (request) {
       var promise = $q.defer(), //The promise
-        apiRequest = baseUrl + "login/"; //Request
+        apiRequest = baseUrl + "schedule/update/" + request.schedule.id; //Request
       console.log(apiRequest);
+      console.log(request.schedule.id);
       if (request == undefined) {
         return promise.promise;
       } else {
         data = {
-          email: request.email,
-          password: request.password,
+          chair: request.update,
+          id: request.schedule.id,
         };
         console.log(data);
         $http
-          .post(apiRequest, data)
+          .put(apiRequest, data)
           .then(function (response) {
             promise.resolve(response);
           })

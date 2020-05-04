@@ -4,7 +4,10 @@ class Api extends Controller
     //TODO:: ADD COMMENTS ABOUT EACH SELECT STATEMENT!
     public static function printMasterQuery()
     {
-        //   print_r(Database::query("SELECT name FROM sqlite_master where type='table'"));
+        $sqlQuery = "SELECT * FROM 'sessions'";
+        $response = new JSONRecordSet();
+        $response = $response->getJSONRecordSet($sqlQuery);
+        print_r($response);
     }
     /**
      * Prints the query for /api/schedule/
@@ -169,7 +172,7 @@ class Api extends Controller
     /**
      * Prints the query for /api/login/
      */
-
+    // FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id  INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
     public function updateSessionChair($updateRequestBody, $updateID)
     {
         $data = self::test_input($updateRequestBody);
@@ -180,9 +183,12 @@ class Api extends Controller
             try {
                 $decoded = JWT::decode($_COOKIE['authentication'], ApplicationRegistry::getSecretKey());
                 if ($decoded->admin == 1) {
-                    Database::query("UPDATE 'sessions' SET chair=:chair WHERE id=:id", [ ':chair' => $data, ':id' => $id ]);
-                    echo json_encode(array( "message" => "Successfully updated Session Chair"), JSON_PRETTY_PRINT);
-                    http_response_code(200);
+                    $sqlQuery = "UPDATE 'sessions' SET chair=:chair WHERE id IN (SELECT s.id FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id 
+                    INNER JOIN 'slots' sl ON s.slotsID=sl.id  INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id WHERE pap_auth.id=:id)";
+                    $params = [ ':chair' => $data, ':id' => $id ];
+                    $response = new JSONRecordSet();
+                    $response = $response->getJSONRecordSet($sqlQuery, $params);
+                    echo $response;
                 } else {
                     echo json_encode(array( "message" => "Only admin can change values!"), JSON_PRETTY_PRINT);
                     http_response_code(401);

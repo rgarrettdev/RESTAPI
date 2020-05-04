@@ -79,12 +79,18 @@ app.controller("scheduleDetailedController", [
     getScheduleDetailed("schedule/" + $routeParams.id);
 
     $scope.editor = function (schedule) {
+      dataTransfer.resetSchedule();
       console.log(schedule);
       dataTransfer.setSchedule(schedule);
       $scope.$broadcast("showEditor");
       $scope.editorVisible = true;
 
     };
+
+    $scope.$on("unshowEditor", function () {
+      console.log(true);
+      $scope.editorVisible = false;
+    })
 
     $scope.adminLogin = false;
     if ($cookies.get("isAdmin") == 1) {

@@ -33,7 +33,7 @@ class Route
                  * Then executes the function via invoke. This can be seen in FrontController.php
                  */
                 if ($_GET['url'] == $route && sizeof($_GET) == 1) {
-                    $function->__invoke();
+                    $apiObj->printMasterQuery();
                     http_response_code(200);
                 /**
                  * Checks if url is a valid route, then checks if api is valid. The get header is size of 2.
@@ -115,37 +115,15 @@ class Route
          */
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {
             $_POST = json_decode(file_get_contents('php://input'), true);
-            $loginApiEmail = $_POST['email'];
-            $loginApiPass = $_POST['password'];
+            print_r($_POST);
             $apiObj->loginRequest($_POST['email'], $_POST['password']);
         }
-        if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-            if ($_GET['url'] == $route && $_GET['api'] == $api && isset($_GET['apiParam1']) == true && isset($_GET['apiParam2']) == true && sizeof($_GET) == 4) {
-                $apiOpt1 = $_GET['apiParam1'];
-                $apiOpt2 = $_GET['apiParam2'];
-                if ($api == 'schedule' && $apiOpt1 == 'update') {
-                    $_PUT = self::putParse();
-                    $apiObj->updateSessionChair($_PUT['sessionChair'], $apiOpt2);
-                }
-            }
+        /**
+         * $_POST used as there are no native $_PUT associative arrays
+         */
+        if ($_SERVER['REQUEST_METHOD'] == 'PUT' && empty($_POST)) {
+            $_POST = json_decode(file_get_contents('php://input'), true);
+            $apiObj->updateSessionChair($_POST['chair'], $_POST['id']);
         }
-    }
-    //TODO: ADD CLAUSES FOR OTHER HEADER TYPES!!
-
-    /**
-     * This function parses put header. PHP has no built in $_PUT
-     */
-    protected static function putParse()
-    {
-        parse_str(file_get_contents("php://input"), $_PUT);
-        foreach ($_PUT as $key => $value) {
-            unset($_PUT[$key]);
-            $_PUT[str_replace('amp;', '', $key)] = $value;
-            /**
-             * Content type needs to be specified as when PUT header is parsed in Route.php, content type reverts to default settings.
-             */
-            header("Content-Type: application/json; charset=UTF-8");
-        }
-        return $_PUT;
     }
 }

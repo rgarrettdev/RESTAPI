@@ -22,7 +22,6 @@ Route::set('documentation', null, function () {
  */
 Route::set('api', null, function () {
     Api::createView('Api');
-    Api::printMasterQuery();
 });
 /**
  *
