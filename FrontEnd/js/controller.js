@@ -8,11 +8,11 @@ app.controller("appController", [
   "$window",
   function ($scope, $window) {
     $scope.$on("LOAD", function () {
-      $scope.alert = true;
+      $scope.infoBar = true;
       $scope.status = "Loading";
     });
     $scope.$on("UNLOAD", function () {
-      $scope.alert = false;
+      $scope.infoBar = false;
     });
     $scope.$on("SearchNoReturn", function () {
       $scope.status = "No results found";
@@ -94,6 +94,8 @@ app.controller("scheduleDetailedController", [
       dataTransfer.setSchedule(schedule);
       $scope.$broadcast("showEditor");
       $scope.editorVisible = true;
+      var element = document.getElementById("editor");
+      element.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
 
     };
 
@@ -289,8 +291,10 @@ app.controller("loginController", [
   "dataService",
   "$location",
   "$cookies",
-  function ($scope, dataService, $location, $cookies) {
+  "$window",
+  function ($scope, dataService, $location, $cookies, $window) {
     $scope.loginUser = function () {
+      $scope.loginAlert = false;
       dataService
         .postApiRequest($scope.user)
         .then(
@@ -307,9 +311,10 @@ app.controller("loginController", [
         .finally(function () {
           if ($cookies.get("loggedIn") == 1) {
             $scope.$emit("Login");
-            window.location = $location.path("/"); //On a sucessful login, redirect to index.
+            $window.location = $location.path("/"); //On a sucessful login, redirect to index.
           } else {
-            console.log("Invalid");
+            $scope.loginAlert = true;
+            $scope.status = "Login Failed: Incorrect Email/Password."       
           }
         });
     };
