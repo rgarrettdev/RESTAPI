@@ -2,9 +2,8 @@ app.component("filter", {
   templateUrl: "views/template/filter.tpl.html",
   controller: function filterController($scope) {
     $scope.dropDownFilter = {
-      option: "Choose a Filter",
+      option: "paper",
       options: [
-        "Choose a Filter",
         "miscellaneous",
         "keynote",
         "break",
