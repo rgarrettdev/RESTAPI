@@ -13,8 +13,10 @@ class Route
             $function->__invoke();
             self::setRequest($route, $api);
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $function->__invoke();
             self::setRequest($route, $api);
         } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+            $function->__invoke();
             self::setRequest($route, $api);
         }
     }
