@@ -1,12 +1,13 @@
 <div class="container-fluid">
   <search></search>
   <ul
-    class="list-group mb-5"
+    class="list-group mb-5 shadow-sm bg-white rounded"
     dir-paginate="presentation in search | itemsPerPage: 5"
-    pagination-id="search"
+    pagination-id="pres"
   >
-    <li class="list-group-item">Title: {{presentation.title}}</li>
+    <li class="list-group-item font-weight-bold">{{presentation.title}}</li>
     <li class="list-group-item">Type: {{presentation.description}}</li>
+    <li class="list-group-item">Chair: {{presentation.chair}}</li>
     <li class="list-group-item">URL: {{presentation.doiURL}}</li>
     <li class="list-group-item">Abstract: {{presentation.abstract}}</li>
     <li class="list-group-item">Authors: {{presentation.author}}</li>
