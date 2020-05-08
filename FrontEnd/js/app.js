@@ -8,12 +8,12 @@ app.config([
   "paginationTemplateProvider",
   "$locationProvider",
   function ($routeProvider, paginationTemplateProvider, $locationProvider) {
-
+    /**
+     * html5 mode, Allows the angularJS to use 'clean' urls, no # in url.
+     */
     $locationProvider.html5Mode(true);
     /**
-     *
-     * Route Info
-     *
+     * Defines the routes of the application.
      */
     $routeProvider
       .when("/", {

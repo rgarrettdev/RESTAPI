@@ -80,7 +80,12 @@ app.service("dataService", [
     };
   },
 ]);
-
+/**
+ * This factory allows data to transfer between
+ * contollers. Specfically the edit component controller
+ * (editController)
+ * and scheduleDetailed controller.
+ */
 app.factory("dataTransfer", function () {
   var data = [];
 

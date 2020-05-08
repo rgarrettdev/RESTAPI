@@ -28,7 +28,11 @@ app.controller("homeController", [
 
   },
 ]);
-
+/**
+ * scheduleController runs getSchedule function which returns
+ * the schedule for the conference.
+ * alerts are controlled by the controller via $emit
+ */
 app.controller("scheduleController", [
   "$scope",
   "dataService",
@@ -55,7 +59,15 @@ app.controller("scheduleController", [
     getSchedule("schedule/");
   },
 ]);
-
+/**
+ * scheduleDetailedController runs getScheduleDetailed function which returns
+ * the schedule for a given day. The controller controls when the editor is
+ * visible through $broadcast and the placeholder information is set and reset through
+ * the dataTransfer service. When the user changes pages through pagination it
+ * will the resPost function run, scrolling the user to the top of the page.
+ * 
+ * alerts are controlled by the controller via $emit
+ */
 app.controller("scheduleDetailedController", [
   "$scope",
   "dataService",
@@ -103,14 +115,23 @@ app.controller("scheduleDetailedController", [
       console.log(true);
       $scope.editorVisible = false;
     })
-
+    /**
+     * Only shows the button that triggers the editor visiblity when an admin
+     * is logged in.
+     */
     $scope.adminLogin = false;
     if ($cookies.get("isAdmin") == 1) {
       $scope.adminLogin = true;
     }
   },
 ]);
-
+/**
+ * presentationController runs getPresentation function which returns
+ * all the presentations. When the user changes pages through pagination it
+ * will the resPost function run, scrolling the user to the top of the page.
+ * 
+ * alerts are controlled by the controller via $emit
+ */
 app.controller("presentationController", [
   "$scope",
   "dataService",
@@ -141,7 +162,13 @@ app.controller("presentationController", [
     };
   },
 ]);
-
+/**
+ * presentationDetailedController runs getScheduleDetailed function which returns
+ * the presentation depending on the schedule. When the user changes pages through pagination
+ * it will the resPost function run, scrolling the user to the top of the page.
+ * 
+ * alerts are controlled by the controller via $emit
+ */
 app.controller("presentationDetailedController", [
   "$scope",
   "dataService",
@@ -173,7 +200,14 @@ app.controller("presentationDetailedController", [
     };
   },
 ]);
-
+/**
+ * presentationCategoryController runs getPresentationCategory function which returns
+ * all the presentations in a given category. 
+ * When the user changes pages through pagination
+ * it will the resPost function run, scrolling the user to the top of the page.
+ * 
+ * alerts are controlled by the controller via $emit
+ */
 app.controller("presentationCategoryController", [
   "$scope",
   "dataService",
@@ -209,7 +243,15 @@ app.controller("presentationCategoryController", [
     };
   },
 ]);
-
+/**
+ * presentationSearchController runs getPresentationSearch
+ * function which returns all the presentations with a given search term.
+ *  
+ * When the user changes pages through pagination
+ * it will the resPost function run, scrolling the user to the top of the page.
+ * 
+ * alerts are controlled by the controller via $emit
+ */
 app.controller("presentationSearchController", [
   "$scope",
   "dataService",
@@ -246,7 +288,16 @@ app.controller("presentationSearchController", [
     };
   },
 ]);
-
+/**
+ * presentationSearchCategoryController runs getPresentationSearchCategory
+ * function which returns all the presentations with a given search term and
+ * a given category.
+ *  
+ * When the user changes pages through pagination
+ * it will the resPost function run, scrolling the user to the top of the page.
+ * 
+ * alerts are controlled by the controller via $emit
+ */
 app.controller("presentationSearchCategoryController", [
   "$scope",
   "dataService",
@@ -285,7 +336,14 @@ app.controller("presentationSearchCategoryController", [
     };
   },
 ]);
-
+/**
+ * loginController, when the user submits the login form
+ * the post request is sent. On success the page is refreshed and then the user
+ * is sent to the index page.
+ *  
+ * alerts are controlled by the controller through loginAlert, on a failed login
+ * attempt the login failed status is alerted to the user.
+ */
 app.controller("loginController", [
   "$scope",
   "dataService",
