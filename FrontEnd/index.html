@@ -7,6 +7,13 @@
     <title>FrontEnd</title>
 
     <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <!-- Font awesome ICONS -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+      integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+      crossorigin="anonymous"
+    />
 
     <!-- Latest compiled and minified CSS -->
     <link
@@ -43,14 +50,24 @@
   </head>
   <body data-ng-controller="appController">
     <navigation></navigation>
-    <div role="alert" class="alert alert-primary" data-ng-show="infoBar">{{status}}</div>
+    <div role="alert" class="alert alert-primary" data-ng-show="infoBar">
+      {{status}}
+    </div>
     <main data-ng-cloak data-ng-view></main>
-    <footer class="mt-auto">
-      <ul class="list-group list-group-horizontal">
-        <li class="list-group-item flex-fill">Web Application Intergration</li>
-        <li class="list-group-item flex-fill">Assingment</li>
-        <li class="list-group-item flex-fill">Ryan Garrett</li>
-      </ul>
+    <footer class="mt-auto bg-dark text-white">
+      <div class="container-fluid">
+      <div class="row text-center p-4">
+      <div class="col-sm">
+        <p>Web Application Intergration</p>
+      </div>
+      <div class="col-sm">
+        <p>Ryan Garrett</p>
+      </div>
+      <div class="col-sm">
+        <p>Assingment</p>
+      </div>
+    </div>
+  </div>
     </footer>
   </body>
 </html>

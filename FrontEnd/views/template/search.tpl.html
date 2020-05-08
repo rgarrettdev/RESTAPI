@@ -17,34 +17,36 @@
     >
     </select>
   </div>
-    <div class="input-group-append mb-2">
-      <a
-        role="button"
-        class="btn btn-primary mb-2 mr-2"
-        data-ng-href="/FrontEnd/presentation/search/{{search}}"
-        data-ng-hide="searchType"
-        >Go</a
+  <div class="input-group-append mb-2">
+    <a
+      role="button"
+      class="btn btn-primary mb-2 mr-2"
+      data-ng-href="/FrontEnd/presentation/search/{{search}}"
+      data-ng-hide="searchType"
+    >
+      <i class="fas fa-search"></i>
+    </a>
+    <a
+      role="button"
+      class="btn btn-primary mb-2 mr-2"
+      data-ng-href="/FrontEnd/presentation/search/{{search}}/category/{{dropDownSearchFilter.option}}"
+      data-ng-hide="!searchType"
+      data-ng-cloak
+    >
+      <i class="fas fa-search"></i>
+    </a>
+    <div class="mt-2 mr-sm-2 custom-control custom-switch">
+      <input
+        type="checkbox"
+        class="mb-2 mr-sm-2 custom-control-input"
+        id="switch1"
+        data-ng-model="searchType"
+        data-ng-true-value="true"
+        data-ng-false-value="false"
+      />
+      <label class="mb-2 mr-sm-2 custom-control-label" for="switch1"
+        >Advanced search</label
       >
-      <a
-        role="button"
-        class="btn btn-primary mb-2 mr-2"
-        data-ng-href="/FrontEnd/presentation/search/{{search}}/category/{{dropDownSearchFilter.option}}"
-        data-ng-hide="!searchType"
-        data-ng-cloak
-        >Go</a
-      >
-      <div class="mt-2 mr-sm-2 custom-control custom-switch">
-        <input
-          type="checkbox"
-          class="mb-2 mr-sm-2 custom-control-input"
-          id="switch1"
-          data-ng-model="searchType"
-          data-ng-true-value="true"
-          data-ng-false-value="false"
-        />
-        <label class="mb-2 mr-sm-2 custom-control-label" for="switch1"
-          >Advanced search</label
-        >
-      </div>
     </div>
+  </div>
 </form>

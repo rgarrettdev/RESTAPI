@@ -1,6 +1,6 @@
 <div role="alert" class="alert alert-danger" data-ng-show="loginAlert">{{status}}</div>
 <div class="container">
-<form>
+<form class="mt-2 p-4">
   <fieldset>
     <legend>User Login</legend>
     <div class="form-row">
@@ -29,9 +29,11 @@
         />
       </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-4 btn-block" data-ng-click="loginUser()">
+    <div class="d-flex justify-content-center">
+    <button type="submit" class="btn btn-primary mt-4" data-ng-click="loginUser()">
       Login
     </button>
+  </div>
   </fieldset>
 </form>
 </div>

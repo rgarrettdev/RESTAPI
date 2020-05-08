@@ -1,22 +1,22 @@
 <div class="container-fluid">
 <div id="breifSchedule">
   <div
-    class="card mb-2"
+    class="card mb-2 shadow-sm bg-light"
     data-ng-repeat="(sessionDay, sessionDetails) in schedule | groupBy: 'day'"
   >
     <div
       class="card-body text-center"
       data-ng-click="showTimeDetails = ! showTimeDetails"
     >
-      <h4 class="card-title">
+      <h2 class="card-title">
         {{sessionDay}}
-      </h4>
+      </h2>
       <div
 
         data-ng-repeat="sessionTime in sessionDetails | unique: 'time' | orderBy: 'time'"
       >
         <a
-          class="card-link scheduleTime"
+          class="card-link scheduleTime font-weight-bold text-primary"
           data-ng-show="showTimeDetails"
           data-ng-href="/FrontEnd/schedule/{{sessionTime.id}}"
         >
