@@ -9,6 +9,12 @@ class Route
         self::$validRoutes[] = $route;
         self::$validApis[] = $api;
 
+        /**
+         * __invoke() exectutes the functions in the front controller, creating the view for a given route.
+         * If an given request, asks for a route(url) that is not defined in the front controller,
+         * nothing can be returned as it is an invalid route.
+         */
+
         if ($_GET['url'] == $route) {
             $function->__invoke();
             self::setRequest($route, $api);
@@ -33,7 +39,7 @@ class Route
             /**
              *
              * This check allows for full control of the api,
-             * so if a dev accidentally added more path paramaters an error is returned.
+             * so if a dev accidentally added more path paramaters that 5 an error is returned.
              *
              */
             $url = $_SERVER['REQUEST_URI'];
@@ -43,15 +49,15 @@ class Route
             if ($slashcount <= 5) {
                 /**
                  * Checks if url is a valid route, and the get header is of size 1
-                 * Then executes the function via invoke. This can be seen in FrontController.php
+                 * Then executes the function . This can be seen in FrontController.php
+                 * This if statement is used for testing purposes.
                  */
                 if ($_GET['url'] == $route && sizeof($_GET) == 1) {
-                    
-                    // $apiObj->printMasterQuery();
+                    $apiObj->printMasterQuery();
                     http_response_code(200);
                 /**
                  * Checks if url is a valid route, then checks if api is valid. The get header is size of 2.
-                 * Then executes the function via invoke. This can be seen in FrontController.php
+                 * Then executes the function. This can be seen in FrontController.php
                  */
                 } elseif ($_GET['url'] == $route && $_GET['api'] == $api && sizeof($_GET) == 2) {
                     if ($_GET['api'] == 'logout') {
@@ -125,7 +131,8 @@ class Route
             }
         }
         /**
-         * POST.
+         * POST request, checks if post id empty if true parses input to the
+         * associative array $_POST.
          */
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {
             $_POST = json_decode(file_get_contents('php://input'), true);
@@ -133,7 +140,8 @@ class Route
             $apiObj->loginRequest($_POST['email'], $_POST['password']);
         }
         /**
-         * $_POST used as there are no native $_PUT associative arrays
+         * PUTT request,
+         * $_POST used as there are no native $_PUT associative arrays.
          */
         if ($_SERVER['REQUEST_METHOD'] == 'PUT' && empty($_POST)) {
             $_POST = json_decode(file_get_contents('php://input'), true);

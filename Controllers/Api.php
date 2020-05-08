@@ -21,6 +21,7 @@ class Api extends Controller
     }
     /**
      * Prints the query for /api/schedule/:id
+     * @param $apiOpt1 is the schedule id
      */
     public function printScheduleQuerySingle($apiOpt1)
     {
@@ -31,7 +32,7 @@ class Api extends Controller
         $params = [ ':id' => $scheduleID ];
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery, $params);
-        print_r($response);
+        echo $response;
     }
     /**
      * Prints the query for /api/presentations/
@@ -46,6 +47,7 @@ class Api extends Controller
     }
     /**
      * Prints the query for /api/presentations/:id
+     * @param $apiOpt1 is the id of the presentation.
      */
     public function printPresentationsQuerySingle($apiOpt1)
     {
@@ -64,6 +66,7 @@ class Api extends Controller
     }
     /**
      * Prints the query for /api/presentations/search/:term
+     * @param $apiOpt1 is the search term used to filter the presentations.
      */
     public function printPresentationsQuerySearch($apiOpt1)
     {
@@ -81,6 +84,8 @@ class Api extends Controller
     }
     /**
      * Prints the query for /api/presentations/search/:term/category/:cat
+     * @param $apiOpt1 is the search term used to filter the presentations.
+     * @param $apiOpt2 is the session type used to filter the presentations.
      */
     public function printPresentationsQuerySearchWithCategory($apiOpt1, $apiOpt2)
     {
@@ -97,6 +102,7 @@ class Api extends Controller
     }
     /**
     * Prints the query for /api/presentations/category/:cat
+    * @param $apiOpt2 is the session type used to filter the presentations.
     */
     public function printPresentationsQueryCategory($apiOpt2)
     {
@@ -111,7 +117,10 @@ class Api extends Controller
         echo $response;
     }
     /**
-    * Prints the query for /api/login/
+    * Prints the query for /api/login
+    * @param $loginApiUser is the email that is submitted.
+    * @param $loginPassword is the password that is submitted.
+    * sets three cookies, one containing jwt, other two used for frontEnd conditions.
     */
     public function loginRequest($loginApiUser, $loginPassword)
     {
@@ -146,20 +155,23 @@ class Api extends Controller
             http_response_code(401);
         }
     }
-
+    /**
+     * /api/logout
+     * sets the cookies returned from a successful login to expire.
+     */
     public function logout()
     {
         if (isset($_COOKIE["authentication"])) {
             unset($_COOKIE["authentication"]);
-            setcookie("authentication", '', time() - 3600, '/'); // empty value and old timestamp
+            setcookie("authentication", '', time() - 3600, '/');
         }
         if (isset($_COOKIE["loggedIn"])) {
             unset($_COOKIE["loggedIn"]);
-            setcookie("loggedIn", '', time() - 3600, '/'); // empty value and old timestamp
+            setcookie("loggedIn", '', time() - 3600, '/');
         }
         if (isset($_COOKIE["isAdmin"])) {
             unset($_COOKIE["isAdmin"]);
-            setcookie("isAdmin", '', time() - 3600, '/'); // empty value and old timestamp
+            setcookie("isAdmin", '', time() - 3600, '/');
         }
         echo json_encode(
             array(
@@ -172,8 +184,9 @@ class Api extends Controller
     }
     /**
      * Prints the query for /api/login/
+     * @param $updateRequestBody contains the information to be updated.
+     * @param $updateID contains the id of the session.
      */
-    // FROM activities a INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id  INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
     public function updateSessionChair($updateRequestBody, $updateID)
     {
         $data = self::test_input($updateRequestBody);

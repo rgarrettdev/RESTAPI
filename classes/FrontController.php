@@ -1,8 +1,8 @@
 <?php
 /**
- *
- * Used to set valid routes for the api human readable pages.
- *
+ * Used to set valid routes for the api and human readable pages.
+ * If an api request is not valid, no view is created
+ * therfore no interaction can occur with the api.
  */
 Route::set('index.php', null, function () {
     Index::createView('Index');
