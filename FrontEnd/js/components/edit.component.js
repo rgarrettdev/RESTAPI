@@ -1,6 +1,6 @@
 app.component("edit", {
     templateUrl: "views/template/edit.tpl.html",
-    controller: function filterController($scope, dataTransfer, dataService, $window) {
+    controller: function editController($scope, dataTransfer, dataService, $window) {
 
       $scope.$on("showEditor", function () {
         var schedule = dataTransfer.getSchedule();
