@@ -1,3 +1,2 @@
 <?php
-define('CONFIGLOCATION', './config/config.xml');
-?>
+define('CONFIGLOCATION', '../config/config.xml');

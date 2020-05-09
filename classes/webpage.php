@@ -29,14 +29,18 @@ class WebPage
   	<title>$pageTitle</title>
   	$mycss 
 </head>
-<body>
+<body class='p-4'>
+<div class='container'>
 
 PAGESTART;
     }
 
     private function makeCSS()
     {
-        return "";
+        return "    <link
+        rel='stylesheet'
+        href='https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css'
+      />";
     }
 
     private function makeHeader($pageHeading1)
@@ -62,7 +66,7 @@ MAIN;
     private function makeFooter($footerText)
     {
         return <<< FOOTER
-  <footer>
+  <footer class='mt-auto'>
   	$footerText
   </footer>
 
@@ -79,6 +83,7 @@ FOOTER;
         $myJS = $this->makeJS();
         return <<< PAGEEND
  $myJS
+ </div>
  </body>
 </html>
 
