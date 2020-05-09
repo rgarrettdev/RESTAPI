@@ -19,10 +19,8 @@ class Route
             $function->__invoke();
             self::setRequest($route, $api);
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $function->__invoke();
             self::setRequest($route, $api);
         } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-            $function->__invoke();
             self::setRequest($route, $api);
         }
     }
@@ -53,7 +51,7 @@ class Route
                  * This if statement is used for testing purposes.
                  */
                 if ($_GET['url'] == $route && sizeof($_GET) == 1) {
-                    $apiObj->printMasterQuery();
+                    // $apiObj->printMasterQuery();
                     http_response_code(200);
                 /**
                  * Checks if url is a valid route, then checks if api is valid. The get header is size of 2.
@@ -136,7 +134,6 @@ class Route
          */
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {
             $_POST = json_decode(file_get_contents('php://input'), true);
-            print_r($_POST);
             $apiObj->loginRequest($_POST['email'], $_POST['password']);
         }
         /**

@@ -143,6 +143,7 @@ class Api extends Controller
             $token['admin'] = $checkPasswordData['admin'];
             $secretKey = ApplicationRegistry::getSecretKey();
             $encodedToken = JWT::encode($token, $secretKey);//Change key to a random string.
+            echo json_encode(array( "message" => "Successfully logged in"), JSON_PRETTY_PRINT);
             http_response_code(200);
             setcookie("authentication", $encodedToken, time() + (3600), "/", false);
             setcookie("loggedIn", true, time() + (3600), "/", false);
@@ -202,7 +203,8 @@ class Api extends Controller
                     $params = [ ':chair' => $data, ':id' => $id ];
                     $response = new JSONRecordSet();
                     $response = $response->getJSONRecordSet($sqlQuery, $params);
-                    echo $response;
+                    echo json_encode(array( "message" => "Successfully changed session chair of id: '$id'"), JSON_PRETTY_PRINT);
+                    ;
                 } else {
                     echo json_encode(array( "message" => "Only admin can change values!"), JSON_PRETTY_PRINT);
                     http_response_code(401);
