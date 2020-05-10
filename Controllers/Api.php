@@ -143,7 +143,7 @@ class Api extends Controller
             $token['admin'] = $checkPasswordData['admin'];
             $secretKey = ApplicationRegistry::getSecretKey();
             $encodedToken = JWT::encode($token, $secretKey);//Change key to a random string.
-            echo json_encode(array( "message" => "Successfully logged in"), JSON_PRETTY_PRINT);
+            echo json_encode(array( "status" => "200","message" => "Successfully logged in"), JSON_PRETTY_PRINT);
             http_response_code(200);
             setcookie("authentication", $encodedToken, time() + (3600), "/", false);
             setcookie("loggedIn", true, time() + (3600), "/", false);
@@ -152,8 +152,8 @@ class Api extends Controller
             }
             //return $response;
         } else {
-            echo("Password incorrect");
-            http_response_code(401);
+            echo json_encode(array( "status" => "400","message" => "Password incorrect: Access Denied"), JSON_PRETTY_PRINT);
+            http_response_code(400);
         }
     }
     /**
@@ -176,6 +176,7 @@ class Api extends Controller
         }
         echo json_encode(
             array(
+                "status" => "200",
                 'data' => array(
                             "result"=>"LoggedOut"
                             )
@@ -203,14 +204,15 @@ class Api extends Controller
                     $params = [ ':chair' => $data, ':id' => $id ];
                     $response = new JSONRecordSet();
                     $response = $response->getJSONRecordSet($sqlQuery, $params);
-                    echo json_encode(array( "message" => "Successfully changed session chair of id: '$id'"), JSON_PRETTY_PRINT);
+                    echo json_encode(array( "status" => "200","message" => "Successfully changed session chair of id: '$id'"), JSON_PRETTY_PRINT);
+                    http_response_code(200);
                     ;
                 } else {
-                    echo json_encode(array( "message" => "Only admin can change values!"), JSON_PRETTY_PRINT);
-                    http_response_code(401);
+                    echo json_encode(array( "status" => "401", "message" => "Only admin can change values!","message" => "Only admin can change values!"), JSON_PRETTY_PRINT);
+                    http_response_code(403);
                 }
             } catch (Exception $e) {
-                echo json_encode(array( "message" => "Access Denied", "error" => $e->getMessage()), JSON_PRETTY_PRINT);
+                echo json_encode(array( "status" => "401","message" => "Access Denied", "error" => $e->getMessage()), JSON_PRETTY_PRINT);
                 http_response_code(401);
             }
         }

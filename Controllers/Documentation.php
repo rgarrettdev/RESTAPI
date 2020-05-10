@@ -4,7 +4,7 @@ class Documentation extends Controller
 {
     public static function docIndex()
     {
-        $webpage = new WebPage("Documentation", "Endpoints", "My footer");
+        $webpage = new WebPage("Documentation", "Endpoints", "Chi2019 Api");
         $webpage->addToBody("<ul>");
         $webpage->addToBody("<li><a href='/documentation/1'>/api/schedule/</a></li>");
         $webpage->addToBody("<li><a href='/documentation/2'>/api/schedule/:id</a></li>");
@@ -19,9 +19,9 @@ class Documentation extends Controller
         $webpage->addToBody("</ul>");
         echo $webpage->getPage();
     }
-    public static function docEndpoint($endpoint, $request, $result)
+    public static function docEndpoint($endpoint, $request, $result, $info)
     {
-        $webpage = new WebPage("Documentation", $endpoint, "My footer");
+        $webpage = new WebPage("Documentation", $endpoint, "Chi2019 Api");
         $webpage->addToBody("<div>");
         $webpage->addToBody('<p>');
         $webpage->addToBody("Request: ");
@@ -34,33 +34,24 @@ class Documentation extends Controller
         $webpage->addToBody($result);
         $webpage->addToBody('</p>');
         $webpage->addToBody("</div>");
+        $webpage->addToBody("<div>");
+        $webpage->addToBody('<p>');
+        $webpage->addToBody("Additional Information: ");
+        $webpage->addToBody($info);
+        $webpage->addToBody('</p>');
+        $webpage->addToBody("</div>");
         echo $webpage->getPage();
     }
-
+    /**
+     * Controls what endpoint data is shown in the documentation view.
+     * This is called within the documentation view.
+     */
     public static function checkEndpoint()
     {
-        if ($_GET['api'] == null) {
-            return null;
-        } elseif ($_GET['api'] == 1) {
-            return 1;
-        } elseif ($_GET['api'] == 2) {
-            return 2;
-        } elseif ($_GET['api'] == 3) {
-            return 3;
-        } elseif ($_GET['api'] == 4) {
-            return 4;
-        } elseif ($_GET['api'] == 5) {
-            return 5;
-        } elseif ($_GET['api'] == 6) {
-            return 6;
-        } elseif ($_GET['api'] == 7) {
-            return 7;
-        } elseif ($_GET['api'] == 8) {
-            return 8;
-        } elseif ($_GET['api'] == 9) {
-            return 9;
-        } elseif ($_GET['api'] == 10) {
-            return 10;
-        }
+        $path = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+        $path = explode("/", $path);
+
+        return $path[2];
     }
 }

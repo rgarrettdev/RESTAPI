@@ -1,9 +1,4 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-d
+RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-l
-RewriteRule ^([^/]*)/([^/]*)$ index.php?url=$1&api=$2 [L]
-RewriteRule ^([^/]*)/([^/]*)/([^/]*)$ index.php?url=$1&api=$2&apiParam1=$3 [L]
-RewriteRule ^([^/]*)/([^/]*)/([^/]*)/([^/]*)$ index.php?url=$1&api=$2&apiParam1=$3&apiParam2=$4 [L]
-RewriteRule ^([^/]*)/([^/]*)/([^/]*)/([^/]*)/([^/]*)$ index.php?url=$1&api=$2&apiParam1=$3&apiParam2=$4&apiParam3=$5 [L]
-RewriteRule ^([^/]+)/? index.php?url=$1 [L,QSA]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php

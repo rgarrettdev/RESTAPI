@@ -29,7 +29,7 @@ class WebPage
   	<title>$pageTitle</title>
   	$mycss 
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
 PAGESTART;
     }
@@ -60,7 +60,7 @@ PAGESTART;
             </ul>
         </nav>
         <div class='container p-4'>
-        <h1>$pageHeading1</h1>
+        <h1 class='text-break'>$pageHeading1</h1>
         </div>
     </header>
 
@@ -82,7 +82,7 @@ MAIN;
     private function makeFooter($footerText)
     {
         return <<< FOOTER
-  <footer class='mt-auto'>
+  <footer class='mt-auto text-center text-white bg-dark p-4'>
   	$footerText
   </footer>
 

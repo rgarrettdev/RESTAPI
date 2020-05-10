@@ -3,7 +3,7 @@ class About extends Controller
 {
     public static function aboutIndex()
     {
-        $webpage = new WebPage("About", "About", "My footer");
+        $webpage = new WebPage("About", "About", "Chi2019 Api");
         $webpage->addToBody("<div>");
         $webpage->addToBody('<p>');
         $webpage->addToBody("Ryan Garrett ");

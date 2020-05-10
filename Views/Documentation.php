@@ -23,7 +23,8 @@ switch ($page) {
                         'day': 'Monday',
                         'time': '09:00 - 10:30'
                     },..]}.}";
-        Documentation::docEndpoint("/api/schedule/", $request, $result);
+        $info = "";
+        Documentation::docEndpoint("/api/schedule/", $request, $result, $info);
         break;
         case '2':
             # code...
@@ -46,7 +47,8 @@ switch ($page) {
                             'time': '16:00 - 17:20',
                             'id': '153'
                         },..]}.}";
-            Documentation::docEndpoint("/api/schedule/:id", $request, $result);
+            $info = "";
+            Documentation::docEndpoint("/api/schedule/:id", $request, $result, $info);
             break;
             case '3':
                 # code...
@@ -54,7 +56,8 @@ switch ($page) {
                 $result = "{
                     'message': 'Successfully changed session chair of id: '0''
                 }";
-                Documentation::docEndpoint("/api/schedule/update/:id", $request, $result);
+                $info = "Requires authentication, the jwt cookie is set via the login endpoint.";
+                Documentation::docEndpoint("/api/schedule/update/:id", $request, $result, $info);
                 break;
                 case '4':
                     # code...
@@ -82,7 +85,8 @@ switch ($page) {
                                     'author': 'Pardis Emami-Naeini',
                                     'affiliation': 'Carnegie Mellon University, Pittsburgh, PA, USA'
                                 },..]}.}";
-                    Documentation::docEndpoint("/api/presentations/", $request, $result);
+                    $info = "";
+                    Documentation::docEndpoint("/api/presentations/", $request, $result, $info);
                     break;
                     case '5':
                         # code...
@@ -113,7 +117,8 @@ switch ($page) {
                                 ]
                             }
                         }";
-                        Documentation::docEndpoint("/api/presentations/:id", $request, $result);
+                        $info = "";
+                        Documentation::docEndpoint("/api/presentations/:id", $request, $result, $info);
                         break;
                         case '6':
                             # code...
@@ -149,7 +154,8 @@ switch ($page) {
                                             'author': 'Lorrie Faith Cranor',
                                             'affiliation': 'Carnegie Mellon University, Pittsburgh, PA, USA'
                                         },..]}.}";
-                            Documentation::docEndpoint("/api/presentations/category/:categoryname", $request, $result);
+                            $info = "";
+                            Documentation::docEndpoint("/api/presentations/category/:categoryname", $request, $result, $info);
                             break;
                             case '7':
                                 # code...
@@ -183,7 +189,8 @@ switch ($page) {
                                                 'author': 'Benjamin Reinheimer',
                                                 'affiliation': 'Karlsruhe Institute of Technology, Karlsruhe, Germany'
                                             },..]}.}";
-                                Documentation::docEndpoint("/api/presentations/search/:searchterm", $request, $result);
+                                    $info = "";
+                                Documentation::docEndpoint("/api/presentations/search/:searchterm", $request, $result, $info);
                                 break;
                                 case '8':
                                     # code...
@@ -214,7 +221,8 @@ switch ($page) {
                                                     'author': 'Benjamin Reinheimer',
                                                     'affiliation': 'Karlsruhe Institute of Technology, Karlsruhe, Germany'
                                                 },..]}.}";
-                                    Documentation::docEndpoint("/api/presentations/search/:searchterm/:categoryname", $request, $result);
+                                        $info = "";
+                                    Documentation::docEndpoint("/api/presentations/search/:searchterm/:categoryname", $request, $result, $info);
                                     break;
                                     case '9':
                                         # code...
@@ -222,7 +230,8 @@ switch ($page) {
                                         $result = "{
                                             'message': 'Successfully logged in'
                                         }";
-                                        Documentation::docEndpoint("/api/login/", $request, $result);
+                                        $info = "Cookies are set, jwt is returned which is used for authentication";
+                                        Documentation::docEndpoint("/api/login/", $request, $result, $info);
                                         break;
                                         case '10':
                                             # code...
@@ -232,7 +241,8 @@ switch ($page) {
                                                     'result': 'LoggedOut'
                                                 }
                                             }";
-                                            Documentation::docEndpoint("/api/logout", $request, $result);
+                                            $info = "Cookies are set to expire";
+                                            Documentation::docEndpoint("/api/logout", $request, $result, $info);
                                             break;
     
     default:
