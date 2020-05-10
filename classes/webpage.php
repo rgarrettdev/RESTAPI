@@ -29,8 +29,7 @@ class WebPage
   	<title>$pageTitle</title>
   	$mycss 
 </head>
-<body class='p-4'>
-<div class='container'>
+<body>
 
 PAGESTART;
     }
@@ -47,7 +46,22 @@ PAGESTART;
     {
         return <<< HEADER
     <header>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/documentation/">Documentation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+            </ul>
+        </nav>
+        <div class='container p-4'>
         <h1>$pageHeading1</h1>
+        </div>
     </header>
 
 HEADER;
@@ -57,7 +71,9 @@ HEADER;
     {
         return <<< MAIN
     <main>
+        <div class='container p-4'>
         $main
+        </div>
     </main>
 
 MAIN;
@@ -83,7 +99,6 @@ FOOTER;
         $myJS = $this->makeJS();
         return <<< PAGEEND
  $myJS
- </div>
  </body>
 </html>
 

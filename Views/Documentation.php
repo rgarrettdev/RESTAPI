@@ -86,7 +86,7 @@ switch ($page) {
                     break;
                     case '5':
                         # code...
-                        $request = "/api/presentations/:id";
+                        $request = "/api/presentations/1";
                         $result = "{
                             'status': 200,
                             'message': {
