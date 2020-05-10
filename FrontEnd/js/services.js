@@ -5,7 +5,7 @@ app.service("dataService", [
     /**
      * Var to hold base url
      */
-    var baseUrl = "http://localhost:8066/api/";
+    var baseUrl = "http://localhost:80/api/";
     /**
      * method to promise when fulfilled calls the then method on success.
      */
