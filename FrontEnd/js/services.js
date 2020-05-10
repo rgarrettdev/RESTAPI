@@ -30,7 +30,7 @@ app.service("dataService", [
      */
     this.postApiRequest = function (request) {
       var promise = $q.defer(), //The promise
-        apiRequest = baseUrl + "login/"; //Request
+        apiRequest = baseUrl + "login"; //Request
       console.log(apiRequest);
       if (request == undefined) {
         return promise.promise;

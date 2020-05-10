@@ -329,7 +329,7 @@ app.controller("presentationSearchCategoryController", [
     };
 
     getPresentationSearchCategory(
-      "presentations/search/" + $routeParams.term + "/" + $routeParams.cat
+      "presentations/advanced/" + $routeParams.term + "/" + $routeParams.cat
     );
     $scope.resetPos = function () {
       window.scrollTo(0, 0);
