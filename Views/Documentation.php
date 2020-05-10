@@ -1,4 +1,8 @@
 <?php
+/**
+ * Endpoint info is genreated, when a specfic id is called in
+ * /documentation/:id
+ */
 $page = Documentation::checkEndpoint();
 switch ($page) {
     case '1':
@@ -231,7 +235,7 @@ switch ($page) {
                                             'message': 'Successfully logged in'
                                         }";
                                         $info = "Cookies are set, jwt is returned which is used for authentication";
-                                        Documentation::docEndpoint("/api/login/", $request, $result, $info);
+                                        Documentation::docEndpoint("/api/login", $request, $result, $info);
                                         break;
                                         case '10':
                                             # code...

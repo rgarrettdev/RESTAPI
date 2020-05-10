@@ -2,6 +2,9 @@
 
 class Documentation extends Controller
 {
+    /**
+     * Set id of specfic endpoint documentation.
+     */
     public static function docIndex()
     {
         $webpage = new WebPage("Documentation", "Endpoints", "Chi2019 Api");
@@ -14,11 +17,15 @@ class Documentation extends Controller
         $webpage->addToBody("<li><a href='/documentation/6'>/api/presentations/category/:categoryname</a></li>");
         $webpage->addToBody("<li><a href='/documentation/7'>/api/presentations/search/:searchterm</a></li>");
         $webpage->addToBody("<li><a href='/documentation/8'>/api/presentations/search/:searchterm/:categoryname</a></li>");
-        $webpage->addToBody("<li><a href='/documentation/9'>/api/login/</a></li>");
+        $webpage->addToBody("<li><a href='/documentation/9'>/api/login</a></li>");
         $webpage->addToBody("<li><a href='/documentation/10'>/api/logout</a></li>");
         $webpage->addToBody("</ul>");
         echo $webpage->getPage();
     }
+    /**
+     * A generic component, to build the endpoint information page.
+     * The data describing the endpoints are found in the Views/Documentation.php
+     */
     public static function docEndpoint($endpoint, $request, $result, $info)
     {
         $webpage = new WebPage("Documentation", $endpoint, "Chi2019 Api");
@@ -43,7 +50,7 @@ class Documentation extends Controller
         echo $webpage->getPage();
     }
     /**
-     * Controls what endpoint data is shown in the documentation view.
+     * Controls what endpoint data is shown in the Views/Documentation.php
      * This is called within the documentation view.
      */
     public static function checkEndpoint()

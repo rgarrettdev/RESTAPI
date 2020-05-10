@@ -1,14 +1,6 @@
 <?php
 class Api extends Controller
 {
-    //TODO:: ADD COMMENTS ABOUT EACH SELECT STATEMENT!
-    public static function printMasterQuery()
-    {
-        $sqlQuery = "SELECT * FROM 'sessions'";
-        $response = new JSONRecordSet();
-        $response = $response->getJSONRecordSet($sqlQuery);
-        print_r($response);
-    }
     /**
      * Prints the query for /api/schedule/
      */
@@ -217,7 +209,11 @@ class Api extends Controller
             }
         }
     }
-
+    /**
+     * Prints the query for /api/login/
+     * @param $data contains the information to be checked.
+     * @return $data contains the sanitised data.
+     */
     protected function test_input($data)
     {
         $data = trim($data);
