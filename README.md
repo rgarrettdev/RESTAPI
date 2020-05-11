@@ -17,7 +17,7 @@ Base url = `localhost`\
 
 ### Read more detail through the documentation
 Found at the documentation endpoint. \
-`/documentation/`
+`localhost/documentation/`
 
 ### Setup
 Xampp setup in httpd.conf \
