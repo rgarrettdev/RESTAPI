@@ -1,5 +1,8 @@
 <?php
-    
+/**
+ * Webpage class, builds html web pages
+ * using OO-PHP
+ */
 class WebPage
 {
     private $pageStart;

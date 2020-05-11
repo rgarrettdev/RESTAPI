@@ -3,7 +3,7 @@
 * abstract class that creates a database connection and returns a recordset
 * Follows the recordset pattern
 *
-* @author YOUR NAME HERE
+* @author Ryan Garrett
 *
 */
 abstract class RecordSet

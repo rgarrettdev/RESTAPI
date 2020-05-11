@@ -12,9 +12,8 @@ app.service("dataService", [
     this.getApiRequest = function (request) {
       var promise = $q.defer(), //The promise
         apiRequest = baseUrl + request; //Request
-      console.log(apiRequest);
       $http
-        .get(apiRequest)
+        .get(apiRequest, {cache:true})
         .then(function (response) {
           promise.resolve({
             result: response.data,
@@ -31,7 +30,6 @@ app.service("dataService", [
     this.postApiRequest = function (request) {
       var promise = $q.defer(), //The promise
         apiRequest = baseUrl + "login"; //Request
-      console.log(apiRequest);
       if (request == undefined) {
         return promise.promise;
       } else {
@@ -39,7 +37,6 @@ app.service("dataService", [
           email: request.email,
           password: request.password,
         };
-        console.log(data);
         $http
           .post(apiRequest, data)
           .then(function (response) {
@@ -57,8 +54,6 @@ app.service("dataService", [
     this.putApiRequest = function (request) {
       var promise = $q.defer(), //The promise
         apiRequest = baseUrl + "schedule/update/" + request.schedule.id; //Request
-      console.log(apiRequest);
-      console.log(request.schedule.id);
       if (request == undefined) {
         return promise.promise;
       } else {
@@ -66,7 +61,6 @@ app.service("dataService", [
           chair: request.update,
           id: request.schedule.id,
         };
-        console.log(data);
         $http
           .put(apiRequest, data)
           .then(function (response) {

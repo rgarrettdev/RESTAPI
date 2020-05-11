@@ -102,7 +102,7 @@ class Api extends Controller
         $sqlQuery = "SELECT a.title, a.doiURL, a.abstract, s.type, s.description, s.chair, s.room, sl.day, sl.time, auth.author, auth.affiliation FROM activities a 
         INNER JOIN 'sessions' s ON a.sessionsID=s.id INNER JOIN 'slots' sl ON s.slotsID=sl.id INNER JOIN 'papers_authors' pap_auth ON a.id=pap_auth.id
          INNER JOIN authors auth ON pap_auth.authorID = auth.authorID
-        WHERE s.type=:sessionType";
+        WHERE s.type=:sessionType AND s.type!='break' AND s.type!='miscellaneous'";
         $params = [ 'sessionType' => $sessionType ];
         $response = new JSONRecordSet();
         $response = $response->getJSONRecordSet($sqlQuery, $params);

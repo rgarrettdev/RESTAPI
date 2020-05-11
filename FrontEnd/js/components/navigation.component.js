@@ -12,8 +12,7 @@ app.component("navigation", {
       .getApiRequest($request)
       .then(
         function (response) {
-          $scope.test = response.result.data.result;
-          console.log($scope.test);
+          $scope.loggedOutStatus = response.result.data.result;
         },
         function (err) {
           $scope.status = "Unable to load data " + err;

@@ -28,3 +28,8 @@ Front-end setup \
 Once xampp has been configured above. \
 To access the front end and have full functionality, please use: \
 `localhost/FrontEnd/`
+
+#### Extra details
+
+API is bult with the MVC pattern in mind, autoloader is found in index.php \
+Controllers handle all the data that the views display. \

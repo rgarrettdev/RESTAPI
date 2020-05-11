@@ -4,9 +4,7 @@ app.component("filter", {
     $scope.dropDownFilter = {
       option: "paper",
       options: [
-        "miscellaneous",
         "keynote",
-        "break",
         "paper",
         "course",
         "altchi",

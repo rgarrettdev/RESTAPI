@@ -22,15 +22,23 @@ app.controller("appController", [
       $window.location.reload();
     });
     $scope.isActive = function () {
-      $scope.showNavFoot = $location.path() === '/login';
+      $scope.showNavFoot = $location.path() === "/login";
       return $scope.showNavFoot;
     };
   },
 ]);
 
 app.controller("homeController", [
-  function () {
+  "$scope",
+  function ($scope) {
+    $scope.$emit("UNLOAD");
+  },
+]);
 
+app.controller("aboutController", [
+  "$scope",
+  function ($scope) {
+    $scope.$emit("UNLOAD");
   },
 ]);
 /**
@@ -70,7 +78,7 @@ app.controller("scheduleController", [
  * visible through $broadcast and the placeholder information is set and reset through
  * the dataTransfer service. When the user changes pages through pagination it
  * will the resPost function run, scrolling the user to the top of the page.
- * 
+ *
  * alerts are controlled by the controller via $emit
  */
 app.controller("scheduleDetailedController", [
@@ -107,19 +115,20 @@ app.controller("scheduleDetailedController", [
 
     $scope.editor = function (schedule) {
       dataTransfer.resetSchedule();
-      console.log(schedule);
       dataTransfer.setSchedule(schedule);
       $scope.$broadcast("showEditor");
       $scope.editorVisible = true;
       var element = document.getElementById("editor");
-      element.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
-
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
     };
 
     $scope.$on("unshowEditor", function () {
-      console.log(true);
       $scope.editorVisible = false;
-    })
+    });
     /**
      * Only shows the button that triggers the editor visiblity when an admin
      * is logged in.
@@ -134,7 +143,7 @@ app.controller("scheduleDetailedController", [
  * presentationController runs getPresentation function which returns
  * all the presentations. When the user changes pages through pagination it
  * will the resPost function run, scrolling the user to the top of the page.
- * 
+ *
  * alerts are controlled by the controller via $emit
  */
 app.controller("presentationController", [
@@ -171,7 +180,7 @@ app.controller("presentationController", [
  * presentationDetailedController runs getScheduleDetailed function which returns
  * the presentation depending on the schedule. When the user changes pages through pagination
  * it will the resPost function run, scrolling the user to the top of the page.
- * 
+ *
  * alerts are controlled by the controller via $emit
  */
 app.controller("presentationDetailedController", [
@@ -207,10 +216,10 @@ app.controller("presentationDetailedController", [
 ]);
 /**
  * presentationCategoryController runs getPresentationCategory function which returns
- * all the presentations in a given category. 
+ * all the presentations in a given category.
  * When the user changes pages through pagination
  * it will the resPost function run, scrolling the user to the top of the page.
- * 
+ *
  * alerts are controlled by the controller via $emit
  */
 app.controller("presentationCategoryController", [
@@ -251,10 +260,10 @@ app.controller("presentationCategoryController", [
 /**
  * presentationSearchController runs getPresentationSearch
  * function which returns all the presentations with a given search term.
- *  
+ *
  * When the user changes pages through pagination
  * it will the resPost function run, scrolling the user to the top of the page.
- * 
+ *
  * alerts are controlled by the controller via $emit
  */
 app.controller("presentationSearchController", [
@@ -269,7 +278,6 @@ app.controller("presentationSearchController", [
         .then(
           function (response) {
             $scope.search = response.result.data.result;
-            console.log($scope.search);
           },
           function (err) {
             $scope.status = "Unable to load data " + err;
@@ -297,10 +305,10 @@ app.controller("presentationSearchController", [
  * presentationSearchCategoryController runs getPresentationSearchCategory
  * function which returns all the presentations with a given search term and
  * a given category.
- *  
+ *
  * When the user changes pages through pagination
  * it will the resPost function run, scrolling the user to the top of the page.
- * 
+ *
  * alerts are controlled by the controller via $emit
  */
 app.controller("presentationSearchCategoryController", [
@@ -315,7 +323,6 @@ app.controller("presentationSearchCategoryController", [
         .then(
           function (response) {
             $scope.search = response.result.data.result;
-            console.log($scope.search);
           },
           function (err) {
             $scope.status = "Unable to load data " + err;
@@ -345,7 +352,7 @@ app.controller("presentationSearchCategoryController", [
  * loginController, when the user submits the login form
  * the post request is sent. On success the page is refreshed and then the user
  * is sent to the index page.
- *  
+ *
  * alerts are controlled by the controller through loginAlert, on a failed login
  * attempt the login failed status is alerted to the user.
  */
@@ -356,6 +363,7 @@ app.controller("loginController", [
   "$cookies",
   "$window",
   function ($scope, dataService, $location, $cookies, $window) {
+    $scope.$emit("UNLOAD");
     $scope.loginUser = function () {
       $scope.loginAlert = false;
       dataService
@@ -377,7 +385,7 @@ app.controller("loginController", [
             $window.location = $location.path("/"); //On a sucessful login, redirect to index.
           } else {
             $scope.loginAlert = true;
-            $scope.status = "Login Failed: Incorrect Email/Password."       
+            $scope.status = "Login Failed: Incorrect Email/Password.";
           }
         });
     };

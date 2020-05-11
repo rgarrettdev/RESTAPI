@@ -9,9 +9,7 @@ app.component("search", {
     $scope.dropDownSearchFilter = {
       option: "paper",
       options: [
-        "miscellaneous",
         "keynote",
-        "break",
         "paper",
         "course",
         "altchi",

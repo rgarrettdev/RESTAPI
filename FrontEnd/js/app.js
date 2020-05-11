@@ -1,7 +1,13 @@
 /**
  * Start a new application (module)
  */
-var app = angular.module("WAI", ["angular.filter", "ngRoute", "ngAnimate", "ngCookies", "angularUtils.directives.dirPagination"]);
+var app = angular.module("WAI", [
+  "angular.filter",
+  "ngRoute",
+  "ngAnimate",
+  "ngCookies",
+  "angularUtils.directives.dirPagination",
+]);
 
 app.config([
   "$routeProvider",
@@ -54,10 +60,13 @@ app.config([
       })
       .when("/about", {
         templateUrl: "views/partials/about.html",
+        controller: "aboutController",
       })
       .otherwise({
         redirectTo: "/",
       });
-      paginationTemplateProvider.setPath('./views/template/dirPagination.tpl.html');
+    paginationTemplateProvider.setPath(
+      "./views/template/dirPagination.tpl.html"
+    );
   },
 ]);
