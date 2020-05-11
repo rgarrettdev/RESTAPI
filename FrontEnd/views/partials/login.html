@@ -5,25 +5,25 @@
     <legend>User Login</legend>
     <div class="form-row">
       <div class="col-md mt-1">
-        <label for="email">Email:</label>
+        <label for="email" class="sr-only">Email:</label>
         <input
           type="email"
           class="form-control"
           name="userEmail"
           id="email"
-          placeholder="Enter email"
+          placeholder="Email address"
           data-ng-model="user.email"
           required
         />
       </div>
       <div class="col-md mt-1">
-        <label for="password">Password:</label>
+        <label for="password" class="sr-only">Password:</label>
         <input
           type="password"
           class="form-control"
           name="userPassword"
           id="password"
-          placeholder="Enter password"
+          placeholder="Password"
           data-ng-model="user.password"
           required
         />
@@ -36,4 +36,7 @@
   </div>
   </fieldset>
 </form>
+<div>
+  <a class="d-flex justify-content-center" href="/FrontEnd/">Return Home</a>
+</div>
 </div>

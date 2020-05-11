@@ -47,29 +47,16 @@
     <script src="js/components/filter.component.js"></script>
     <script src="js/components/navigation.component.js"></script>
     <script src="js/components/edit.component.js"></script>
+    <script src="js/components/footer.component.js"></script>
   </head>
   <body data-ng-controller="appController">
     <header>
-    <navigation></navigation>
-  </header>
+      <navigation data-ng-hide="isActive()"></navigation>
+    </header>
     <div role="alert" class="alert alert-primary" data-ng-show="infoBar">
       {{status}}
     </div>
     <main data-ng-cloak data-ng-view></main>
-    <footer class="mt-auto bg-dark text-white">
-      <div class="container-fluid">
-      <div class="row text-center p-4">
-      <div class="col-sm">
-        <p>Web Application Intergration</p>
-      </div>
-      <div class="col-sm">
-        <p>Ryan Garrett</p>
-      </div>
-      <div class="col-sm">
-        <p>Assingment</p>
-      </div>
-    </div>
-  </div>
-    </footer>
+    <footer class="mt-auto bg-dark text-white" data-ng-hide="isActive()"></footer>
   </body>
 </html>

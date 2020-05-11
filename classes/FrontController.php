@@ -49,10 +49,14 @@ if ($route[1] == 'api') {
                         switch ($param3) {
 
                             default:
-                               
-                                $apiObj = new Api();
-                                $_POST = json_decode(file_get_contents('php://input'), true);
-                                $apiObj->updateSessionChair($_POST['chair'], $_POST['id']);
+                               if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+                                   $apiObj = new Api();
+                                   $_POST = json_decode(file_get_contents('php://input'), true);
+                                   $apiObj->updateSessionChair($_POST['chair'], $_POST['id']);
+                               } else {
+                                   echo json_encode(array( "status" => "400","message" => "Use PUT METHOD, Please consult the documentation"), JSON_PRETTY_PRINT);
+                               }
+
                             break;
                         }
                     break;
@@ -110,10 +114,13 @@ if ($route[1] == 'api') {
         break;
 
             case 'login':
-           
-                $apiObj = new Api();
-                $_POST = json_decode(file_get_contents('php://input'), true);
-                $apiObj->loginRequest($_POST['email'], $_POST['password']);
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $apiObj = new Api();
+                    $_POST = json_decode(file_get_contents('php://input'), true);
+                    $apiObj->loginRequest($_POST['email'], $_POST['password']);
+                } else {
+                    echo json_encode(array( "status" => "400","message" => "Use POST METHOD, Please consult the documentation"), JSON_PRETTY_PRINT);
+                }
             break;
 
             case 'logout':

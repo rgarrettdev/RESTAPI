@@ -5,7 +5,6 @@ app.component("navigation", {
     if ($cookies.get("loggedIn") == 1) {
       $scope.login = true;
     }
-
     $scope.logout = function () {
       $scope.login = false;
       $request = "logout";

@@ -6,7 +6,8 @@
 app.controller("appController", [
   "$scope",
   "$window",
-  function ($scope, $window) {
+  "$location",
+  function ($scope, $window, $location) {
     $scope.$on("LOAD", function () {
       $scope.infoBar = true;
       $scope.status = "Loading";
@@ -20,6 +21,10 @@ app.controller("appController", [
     $scope.$on("Login", function () {
       $window.location.reload();
     });
+    $scope.isActive = function () {
+      $scope.showNavFoot = $location.path() === '/login';
+      return $scope.showNavFoot;
+    };
   },
 ]);
 

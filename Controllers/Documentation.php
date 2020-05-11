@@ -16,7 +16,7 @@ class Documentation extends Controller
         $webpage->addToBody("<li><a href='/documentation/5'>/api/presentations/:id</a></li>");
         $webpage->addToBody("<li><a href='/documentation/6'>/api/presentations/category/:categoryname</a></li>");
         $webpage->addToBody("<li><a href='/documentation/7'>/api/presentations/search/:searchterm</a></li>");
-        $webpage->addToBody("<li><a href='/documentation/8'>/api/presentations/search/:searchterm/:categoryname</a></li>");
+        $webpage->addToBody("<li><a href='/documentation/8'>/api/presentations/advanced/:searchterm/:categoryname</a></li>");
         $webpage->addToBody("<li><a href='/documentation/9'>/api/login</a></li>");
         $webpage->addToBody("<li><a href='/documentation/10'>/api/logout</a></li>");
         $webpage->addToBody("</ul>");
@@ -32,14 +32,16 @@ class Documentation extends Controller
         $webpage->addToBody("<div>");
         $webpage->addToBody('<p>');
         $webpage->addToBody("Request: ");
+        $webpage->addToBody("<a href='$request'>");
         $webpage->addToBody($request);
+        $webpage->addToBody('</a>');
         $webpage->addToBody('</p>');
         $webpage->addToBody("</div>");
         $webpage->addToBody("<div>");
-        $webpage->addToBody('<p>');
+        $webpage->addToBody('<pre>');
         $webpage->addToBody("Expected result: ");
         $webpage->addToBody($result);
-        $webpage->addToBody('</p>');
+        $webpage->addToBody('</pre>');
         $webpage->addToBody("</div>");
         $webpage->addToBody("<div>");
         $webpage->addToBody('<p>');

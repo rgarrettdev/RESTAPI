@@ -1,7 +1,9 @@
 # RESTAPI
 List of all supported endpoints.
 ## Supported Endpoints
- `/api/`\
+
+Base url = `localhost`\
+
  `/api/schedule/`\
  `/api/schedule/:session`\
  `/api/schedule/update/:id`\
@@ -10,7 +12,7 @@ List of all supported endpoints.
  `/api/presentations/search/:searchterm`\
  `/api/presentations/search/:searchterm/:categoryname`\
  `/api/presentations/category/:categoryname`\
- `/api/login/`\
+ `/api/login`\
  `/api/logout`
 
 ### Read more detail through the documentation
@@ -18,11 +20,11 @@ Found at the documentation endpoint. \
 `/documentation/`
 
 ### Setup
-Xampp setup \
-`Port: 80`\
+Xampp setup in httpd.conf \
+`Listen Port: 80`\
 `Set the DocumentRoot to point to the local-html folder`
 
 Front-end setup \
 Once xampp has been configured above. \
 To access the front end and have full functionality, please use: \
-`http://localhost/FrontEnd/`
+`localhost/FrontEnd/`

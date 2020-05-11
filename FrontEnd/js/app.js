@@ -17,43 +17,43 @@ app.config([
      */
     $routeProvider
       .when("/", {
-        templateUrl: "views/home.html",
+        templateUrl: "views/partials/home.html",
         controller: "homeController",
       })
       .when("/schedule", {
-        templateUrl: "views/schedule.html",
+        templateUrl: "views/partials/schedule.html",
         controller: "scheduleController",
       })
       .when("/login", {
-        templateUrl: "views/login.html",
+        templateUrl: "views/partials/login.html",
         controller: "loginController",
       })
       .when("/schedule/:id", {
-        templateUrl: "views/scheduleDetailed.html",
+        templateUrl: "views/partials/scheduleDetailed.html",
         controller: "scheduleDetailedController",
       })
       .when("/presentation", {
-        templateUrl: "views/presentation.html",
+        templateUrl: "views/partials/presentation.html",
         controller: "presentationController",
       })
       .when("/presentation/:id", {
-        templateUrl: "views/presentationSearch.html",
+        templateUrl: "views/partials/presentationSearch.html",
         controller: "presentationDetailedController",
       })
       .when("/presentation/category/:cat", {
-        templateUrl: "views/presentation.html",
+        templateUrl: "views/partials/presentation.html",
         controller: "presentationCategoryController",
       })
       .when("/presentation/search/:term", {
-        templateUrl: "views/presentationSearch.html",
+        templateUrl: "views/partials/presentationSearch.html",
         controller: "presentationSearchController",
       })
       .when("/presentation/search/:term/category/:cat", {
-        templateUrl: "views/presentationSearch.html",
+        templateUrl: "views/partials/presentationSearch.html",
         controller: "presentationSearchCategoryController",
       })
       .when("/about", {
-        templateUrl: "views/about.html",
+        templateUrl: "views/partials/about.html",
       })
       .otherwise({
         redirectTo: "/",
